@@ -1,13 +1,13 @@
-import React, { useEffect, Component } from "react";
-import { db, auth } from "./firebase"; 
+import React, { useEffect } from "react";
+import { auth } from "./firebase";
 
 // 転移ページ
 import Mainpage from "./Mainpage";
 // import Feed from "./Feed";
 
 // 認証機能の実装
-     // その際に[user]内に格納される＝空だったら何も起こらない
-     // !user = false→ユーザーがログインしていない状態の時はログインページに飛ばす
+// その際に[user]内に格納される＝空だったら何も起こらない
+// !user = false→ユーザーがログインしていない状態の時はログインページに飛ばす
 const App = (props) => {
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
@@ -16,28 +16,26 @@ const App = (props) => {
     return () => unSub();
   });
 
-// class App extends Component {
-//     render() {
-//       return (
-//         <div className="App">
-//           <Router>
-//             <div>
-//               <Route exact path='/' component={App}/>
-//               <Route path='/home' component={Home}/>
-//               <Route path="/feed" component={Feed} />
-//             </div>
-//           </Router>
-//         </div>
-//       );
-//     }
-//   };
-
-
+  // class App extends Component {
+  //     render() {
+  //       return (
+  //         <div className="App">
+  //           <Router>
+  //             <div>
+  //               <Route exact path='/' component={App}/>
+  //               <Route path='/home' component={Home}/>
+  //               <Route path="/feed" component={Feed} />
+  //             </div>
+  //           </Router>
+  //         </div>
+  //       );
+  //     }
+  //   };
 
   // ログインしてる場合の表示（マイページ）
   return (
     <>
-    {/* <Router>
+      {/* <Router>
       <div>
         <ul>
           <li><Link to="/"> Main</Link></li>
@@ -52,9 +50,9 @@ const App = (props) => {
       </div>
     </Router> */}
 
-    <div>
-      {/* ログアウト用のボタン */}
-      {/* <button
+      <div>
+        {/* ログアウト用のボタン */}
+        {/* <button
         onClick={async () => {
           try {
             await auth.signOut();
@@ -65,14 +63,12 @@ const App = (props) => {
         }}>
           LOGOUT<ExitToAppIcon />
       </button> */}
-      <div className="wrap"> 
-      {/* <h1>Orelympic Mainpage</h1> */}
-      <Mainpage />
-
+        <div className="wrap">
+          {/* <h1>Orelympic Mainpage</h1> */}
+          <Mainpage />
+        </div>
       </div>
-    </div>
     </>
   );
 };
 export default App;
-

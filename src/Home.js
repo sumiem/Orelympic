@@ -5,6 +5,9 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
 // コンテンツ
 import Header from "./Header";
@@ -20,6 +23,20 @@ import Sidebar from "./Sidebar";
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
+  },
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  control: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -84,23 +101,38 @@ const Home = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container>
+      <Container maxWidth="lg">
         <Header title="Orelymic Home" sections={sections} />
         <br />
         <main>
           <TopMain post={topMain} />
+          <Grid item xs={12} md={8}>
+            <Typography variant="h6" gutterBottom>
+              Orelympic
+            </Typography>
+            <Divider />
+          </Grid>
           <Grid container spacing={4}>
             {/* <h1>Orelympic説明</h1>
             <br /> */}
           </Grid>
           {/* メインのグリッド */}
           <Grid container spacing={5} className={classes.mainGrid}>
-            <Main title="Orelympic" />
-            <Sidebar
-              title={sidebar.title}
-              description={sidebar.description}
-              social={sidebar.social}
-            />
+            <Grid item xs={12} sm={8}>
+              <Paper className={classes.paper}>
+                <Main title="Orelympic" />
+              </Paper>
+            </Grid>
+            {/* Sidebar */}
+            <Grid item xs={12} sm={4}>
+              <Paper className={classes.paper}>
+                <Sidebar
+                  title={sidebar.title}
+                  description={sidebar.description}
+                  social={sidebar.social}
+                />
+              </Paper>
+            </Grid>
           </Grid>
         </main>
       </Container>

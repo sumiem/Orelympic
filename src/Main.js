@@ -1,28 +1,34 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import TwitterIcon from "@material-ui/icons/Twitter";
+// import Container from "@material-ui/core/Container";
+// import Typography from "@material-ui/core/Typography";
+// import Divider from "@material-ui/core/Divider";
+
+// import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme) => ({
-    mainGrid: {
-      marginTop: theme.spacing(3),
-    },
-  }));
+  markdown: {
+    ...theme.typography.body2,
+    padding: theme.spacing(3, 0),
+  },
+}));
 
-const Main = () => {
-    return (
-        <div>
-            <Grid>
-              <h1>スポーツ情報</h1>
-              <br />
-              <h1>イベントニュース</h1>
-              <br />
-            </Grid>
-        </div>
-    )
-}
+const Main = (props) => {
+  const classes = useStyles();
+  //   const { posts, title } = props;
 
-export default Main
+  return (
+    <div>
+      <Grid item xs={12} md={8}>
+        {/* <Typography variant="h6" gutterBottom>
+                {title}
+                </Typography> */}
+        {/* <Divider /> */}
+        <Grid className={classes.markdown}></Grid>
+      </Grid>
+    </div>
+  );
+};
+
+export default Main;
