@@ -1,0 +1,49 @@
+.postdata{
+
+    background-color: aquamarine;
+    border-radius: 20px;
+    width: 200px;
+    height: auto;
+    text-align: center;
+    
+}
+
+.Post{
+    display: flex;
+    width: 100%;
+}
+
+.App{
+    width: 100%;
+}
+
+.wrap{text-align: center;}
+
+h2{
+   border-bottom: 5px;
+   border-color: black; 
+   color: brown;
+}
+
+.tweeti{
+    display: flex;
+}
+
+.tweetwrap{
+    background-color: gray;
+    text-align: center;
+}
+
+.textbox{
+width: 200px;
+height:60px;
+}
+
+.toroku{
+background-color: lightslategray;
+width:60%;
+border-radius: 30px;
+margin: auto;
+text-align: center;
+
+}

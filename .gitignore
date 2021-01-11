@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# envファイル除去（完全位置だが＊をつけるとディレクトリは＊＊、その場所が何でも良くなる）
+.env
