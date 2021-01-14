@@ -1,73 +1,66 @@
 import React, { useEffect } from "react";
 import { auth } from "./firebase";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, login, logout } from "./features/userSlice";
 
-// 転移ページ
 import Mainpage from "./Mainpage";
-// import Feed from "./Feed";
 
 // 認証機能の実装
-// その際に[user]内に格納される＝空だったら何も起こらない
-// !user = false→ユーザーがログインしていない状態の時はログインページに飛ばす
+import Login from "./Login";
+
 const App = (props) => {
+  // const user = useSelector(selectUser);
+  // const dispatch = useDispatch();
+  
   useEffect(() => {
-    const unSub = auth.onAuthStateChanged((user) => {
-      !user && props.history.push("login");
+    const unSub = auth.onAuthStateChanged((authUser) => {
+      if (authUser){
+
+      }else{ props.history.push("login"); };
+      // if (authUser) {
+      //   dispatch(
+      //     login({
+      //       uid: authUser.uid,
+      //       photoUrl: authUser.photoURL,
+      //       displayName: authUser.displayName,
+      //     })
+      //   );
+      // } else {
+      //   dispatch(logout());
+      // }
+
+// 素の文章
+      // !authUser && props.history.push("login");
+
+
     });
     return () => unSub();
-  });
-
-  // class App extends Component {
-  //     render() {
-  //       return (
-  //         <div className="App">
-  //           <Router>
-  //             <div>
-  //               <Route exact path='/' component={App}/>
-  //               <Route path='/home' component={Home}/>
-  //               <Route path="/feed" component={Feed} />
-  //             </div>
-  //           </Router>
-  //         </div>
-  //       );
-  //     }
-  //   };
+  }, 
+  // [dispatch]
+  );
 
   // ログインしてる場合の表示（マイページ）
   return (
     <>
-      {/* <Router>
+    {/* user.uid ? (userいる時):(いない時) */}
+    {/* {user.uid ? (
       <div>
-        <ul>
-          <li><Link to="/"> Main</Link></li>
-          <li><Link to="/home">Home</Link></li>
-          <li><Link to="/feed">Feed</Link></li>
-        </ul>
-
-        <hr/>
-        <Route exact path="/" component={Mainpage}/>
-        <Route exact path="/home" component={Home}/>
-        <Route exact path="/feed" component={Feed}/>
+        <Mainpage />
       </div>
-    </Router> */}
-
-      <div>
-        {/* ログアウト用のボタン */}
-        {/* <button
-        onClick={async () => {
-          try {
+    ): (
+      <Login />
+      // userいるとき、Feed　いない時Auth
+    )} */}
+    
+    <div>
+    <Mainpage />
+    </div>
+      {/* <button
+        onClick={async () => { try {
             await auth.signOut();
             props.history.push("login");
-          } catch (error) {
-            alert(error.message);
-          }
-        }}>
-          LOGOUT<ExitToAppIcon />
+          } catch (error) { alert(error.message) }}}>LOGOUT
       </button> */}
-        <div className="wrap">
-          {/* <h1>Orelympic Mainpage</h1> */}
-          <Mainpage />
-        </div>
-      </div>
     </>
   );
 };

@@ -17,6 +17,7 @@ const firebaseApp = firebase.initializeApp({
 
 export const db = firebaseApp.firestore();
 export const auth = firebase.auth();
-export const storage = firebase.storage(); //追加
+export const storage = firebase.storage(); 
+export const provider = new firebase.auth.GoogleAuthProvider(); //追加
 // Router認証用
 export default firebase;

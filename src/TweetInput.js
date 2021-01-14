@@ -135,12 +135,10 @@ const TweetInput = () => {
     <div className="toroku">
       <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              インスタ式記録
+              スポーツ登録
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
-              いろんな記録を写真に残していきましょう。<br/>
-              楽しみの記録はどんどん更新していきましょう。
-              ときには悔しい記録も、成長へのステップです。
+              いろんなスポーツと写真を残していきましょう。
             </Typography>
 
             <div className="toroku">
