@@ -65,6 +65,7 @@ const SportsAct = (props) => {
   //   const [openComments, setOpenComments] = useState(false);
   //   コメント追加用
   const [act, setAct] = useState("");
+
   const [acttitle, setActtitle] = useState("");
   const [actImage, setActImage] = useState(null);
   const [actcomment, setActcomment] = useState("");
@@ -105,7 +106,7 @@ const SportsAct = (props) => {
   useEffect(() => {
     const unSub = db
       .collection("sports")
-      .doc(props.sportId)
+      .doc(props.sportsId)
       .collection("acts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
@@ -129,7 +130,6 @@ const SportsAct = (props) => {
           }))
         );
       });
-      console.log(acts);
     return () => {
       unSub();
     };

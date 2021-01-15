@@ -94,7 +94,6 @@ const SportsExp = () => {
       }, []);
     
     // firebaseの情報を取得します
-console.log (sports);
 
     // 表示
     return (

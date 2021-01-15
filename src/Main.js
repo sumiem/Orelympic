@@ -106,7 +106,7 @@ const Main = (props) => {
             <div className={classes.root}>
               <GridList className={classes.gridList} cols={2.5}>
                 {newsData.map((tile) => (
-                  <GridListTile key={tile.img}>
+                  <GridListTile key={tile.img2}>
                     <img src={tile.img} alt={tile.title} />
                     <GridListTileBar
                       title={tile.title}

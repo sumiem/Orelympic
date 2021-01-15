@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db, auth } from "./firebase";
 import firebase from "firebase/app";
 
 const Test = () => {
-    var actRef = db.collection("sports").doc("wJdcyjUWAPALJxPe6NYR");
 
     return (
         <div>
+            <p>テスト</p>
+            {/* <p>{user.email}</p> */}
             
         </div>
     )
-}
+};
 
 export default Test

@@ -4,11 +4,10 @@ import App from "./App";
 import { Route, BrowserRouter } from "react-router-dom";
 // import { Provider } from "react-redux";
 // import * as serviceWorker from "./serviceWorker";
-import store from "./app/store";
+// import store from "./app/store";
 
 import Login from "./Login";
 import Home from "./Home";
-import Album from "./Album";
 
 import Main from "./Main";
 import Mainpage from "./Mainpage";
@@ -17,10 +16,13 @@ import SportsResister from "./SportsResister";
 import SportsList from "./SportsList";
 import SportsExp from "./SportsExp";
 import SportsAct from "./SportsAct";
+import UserInfo from "./UserInfo"
+import UserInfoTEST from "./UserInfoTEST"
+import Test from "./Test"
 
 ReactDOM.render(
   <BrowserRouter>
-    <>
+    <div>
       {/* <Provider store={store}>
         <App />
         <Login />
@@ -33,17 +35,20 @@ ReactDOM.render(
       {/* ログインしていないときはLoginを表示 */}
       <Route exact path="/login" component={Login} />
       <Route exact path="/home" component={Home} />
-      <Route exact path="/album" component={Album} />
       {/* <Route exact path="/users" component={Users} /> */}
       <Route exact path="/mydetail" component={Mydetail} />
       <Route exact path="/sportsresister" component={SportsResister} />
       <Route exact path="/sportslist" component={SportsList} />
       <Route exact path="/sportsexp" component={SportsExp} />
       <Route exact path="/sportact" component={SportsAct} />
+      <Route exact path="/userinfomation" component={UserInfo} />
+      <Route exact path="/test" component={Test} />
+
+      <Route exact path="/userinfotest" component={UserInfoTEST} />
 
       {/* 内容確認用 */}
       <Route exact path="/main" component={Main} />
-    </>
+    </div>
   </BrowserRouter>,
   document.getElementById("root")
 );
