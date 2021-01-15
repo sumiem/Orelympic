@@ -14,7 +14,9 @@ import Main from "./Main";
 import Mainpage from "./Mainpage";
 import Mydetail from "./Mydetail";
 import SportsResister from "./SportsResister";
-import SportsList from "./SportsList"
+import SportsList from "./SportsList";
+import SportsExp from "./SportsExp";
+import SportsAct from "./SportsAct";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -36,6 +38,8 @@ ReactDOM.render(
       <Route exact path="/mydetail" component={Mydetail} />
       <Route exact path="/sportsresister" component={SportsResister} />
       <Route exact path="/sportslist" component={SportsList} />
+      <Route exact path="/sportsexp" component={SportsExp} />
+      <Route exact path="/sportact" component={SportsAct} />
 
       {/* 内容確認用 */}
       <Route exact path="/main" component={Main} />
