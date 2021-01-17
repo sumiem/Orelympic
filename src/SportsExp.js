@@ -2,23 +2,20 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, login, logout } from "./features/userSlice";
+
 import SportsAct from "./SportsAct"
 
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import AppBar from "@material-ui/core/AppBar";
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
+
 import Gridlist from '@material-ui/core/GridList';
-import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +54,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SportsExp = () => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+    // ユーザ情報の取得
+    // const [user, setUser] = useState(null);
+    // useEffect(() => {
+    //     const unSub = auth.onAuthStateChanged((authUser) => {
+    //       if (authUser){ setUser(authUser);
+    //       }else{ setUser(null);
+    //       };
+    //     });
+    //       return () => unSub();
+    //     },);
+        // 例 UID: {user && user.uid}
     const classes = useStyles();
     const [sports, setSports] = useState([
         {
@@ -67,6 +77,7 @@ const SportsExp = () => {
             detail: "",
             username: "",
             timestamp: "",
+            sportsavatar:"",
         },
     ]);
 
@@ -85,6 +96,7 @@ const SportsExp = () => {
                 detail: doc.data().detail,
                 timestamp: doc.data().timestamp,
                 username: doc.data().username,
+                sportsavatar: doc.data().sportsavatar
               }))
             )
           );
@@ -98,13 +110,32 @@ const SportsExp = () => {
     // 表示
     return (
         <>
+        <CssBaseline />
+        <AppBar position="relative">
+
+        </AppBar>
         <div>
             <Typography>スポーツ一覧</Typography></div>
+            {/* ここ書き方あとでちぇっくして */}
+            <Button
+                  color="inherit"
+                  id="menu-appbar"
+                  onClick={async () => {
+                    await auth.signOut();
+                  }}
+                >
+                  Logout
+                </Button>
+                <button
+
+        >
+          logout
+        </button>
         {/* <div>{props.sportsname}</div> */}
         {/* <div>{props.timestamp}</div> */}
 
         <div>
-        {/* postsがあって、idがある場合 */}
+        {/* sportsがあって、idがある場合 */}
         {sports[0]?.id && (
           <>
             <Gridlist>
@@ -118,6 +149,7 @@ const SportsExp = () => {
               detail={sport.detail}
               timestamp={sport.timestamp}
               uername={sport.username}
+              sportsavatar={sport.sportsavatar}
               />
             ))}
             </Gridlist>

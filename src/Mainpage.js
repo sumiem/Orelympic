@@ -62,12 +62,6 @@ const useStyles = makeStyles((theme) => ({
 //   image:"https://source.unsplash.com/random"
 // };
 
-// const basket = {
-//   name: "バスケット",
-//   desc: "XXXXXXXXXXXXXXXXXXXXXXXXX",
-//   image:"https://source.unsplash.com/random"
-// };
-
 // const cards = [beach, basket];
 
 const Mainpage = (props) => {
@@ -107,8 +101,8 @@ const Mainpage = (props) => {
       firebaseData();
     };
   }, []);
-  console.log("aaa");
-  console.log(sports);
+
+  // console.log(sports);
   const classes = useStyles();
 
   return (
@@ -193,9 +187,11 @@ const Mainpage = (props) => {
               <div className={classes.heroButtons}>
                 <Grid container spacing={2} justify="center">
                   <Grid item>
-                    <Button variant="contained" color="primary">
-                      種目を探す・登録する
-                    </Button>
+                    <Link to="/sportsexp">
+                      <Button variant="contained" color="primary">
+                        種目を探す・登録する
+                      </Button>
+                    </Link>
                   </Grid>
                   <Grid item>
                     <Button variant="outlined" color="primary">

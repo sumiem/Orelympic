@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { db, auth, storage } from "./firebase";
 import firebase from "firebase/app";
-// import { useSelector } from "react-redux";
-// import { selectUser } from "./features/userSlice";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
 
 import { Avatar, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MessageIcon from "@material-ui/icons/Message";
+// import MessageIcon from "@material-ui/icons/Message";
 import SendIcon from "@material-ui/icons/Send";
-import clsx from 'clsx';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import clsx from 'clsx';
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
 
+import IconButton from "@material-ui/core/IconButton";
+import { red } from "@material-ui/core/colors";
+
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 // Redux書き方
 // import { db, auth, provider, storage } from "./firebase";
@@ -34,21 +29,21 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     maxWidth: 360,
-    maxHeight: 1200,
+    maxHeight: 2000,
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: "rotate(180deg)",
   },
   avatar: {
     backgroundColor: red[500],
@@ -57,6 +52,19 @@ const useStyles = makeStyles((theme) => ({
 
 // SportsExpからスポーツの情報(sports)がpropsに入ってる場合
 const SportsAct = (props) => {
+  const user = useSelector(selectUser);
+  // User情報取得
+  // const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //     const unSub = auth.onAuthStateChanged((authUser) => {
+  //       if (authUser){ setUser(authUser);
+  //       }else{ setUser(null);
+  //       };
+  //     });
+  //       return () => unSub();
+  //     },);
+  // 例 UID: {user && user.uid}
+
   const classes = useStyles();
   // Redux
   //   const user = useSelector(selectUser);
@@ -71,11 +79,11 @@ const SportsAct = (props) => {
   const [actcomment, setActcomment] = useState("");
   const [level, setLevel] = useState("");
   const [date, setDate] = useState("");
-//   素のデータだけどせっとするから書く
-//   const [sportsId, setSportsId] = useState("");
-//   const [sportsname, setSportsname] = useState("");
-//   const [sportsno, setSportsno] = useState("");
-// actsの箱を作る(ここで宣言したから表示できる)
+  //   素のデータだけどせっとするから書く
+  //   const [sportsId, setSportsId] = useState("");
+  //   const [sportsname, setSportsname] = useState("");
+  //   const [sportsno, setSportsno] = useState("");
+  // actsの箱を作る(ここで宣言したから表示できる)
   const [acts, setActs] = useState([
     {
       id: "",
@@ -89,9 +97,9 @@ const SportsAct = (props) => {
       level: "",
       date: "",
       timestamp: null,
-    //   sportsId: "",
-    //   sportsname: "",
-    //   sportsno: "",
+      // sportsId: "",
+      // sportsname: "",
+      // sportsno: "",
     },
   ]);
 
@@ -108,6 +116,7 @@ const SportsAct = (props) => {
       .collection("sports")
       .doc(props.sportsId)
       .collection("acts")
+      .where("uid", "==", user.uid)
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setActs(
@@ -134,7 +143,7 @@ const SportsAct = (props) => {
       unSub();
     };
     // 投稿のIDが変わった場合は対象の投稿のコメントを入れる。
-  }, [props.sportId]);
+  }, [props.sportsId]);
 
   // 送信処理をかくactはsports毎につくので
   const sendAct = (e) => {
@@ -169,19 +178,19 @@ const SportsAct = (props) => {
                 .collection("acts")
                 .add({
                   // ユーザ情報
-                  //   avatar: user.photoUrl,
-                  //   uid: user.uid,
-                  //   username: user.displayName,
-                  //   投稿内容
+                  avatar: user.photoUrl,
+                  uid: user.uid,
+                  username: user.displayName,
+                  // 投稿内容
                   actimage: url,
                   acttitle: acttitle,
                   actcomment: actcomment,
                   level: level,
                   date: date,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                //   sportsId: props.sportsId,
-                //   sportsno: props.sportsno,
-                //   sportsname: props.sportsname,
+                  //   sportsId: props.sportsId,
+                  //   sportsno: props.sportsno,
+                  //   sportsname: props.sportsname,
                 });
             });
         }
@@ -190,9 +199,9 @@ const SportsAct = (props) => {
       db.collection("sports").doc(props.sportsId).collection("acts").add({
         // コメントするユーザのデータと、入力テキストをactに入力（追記する）
         //   Reduxを使わないならここ書き換える↓自分のデータ
-        //   uid: user.uid,
-        //   avatar: user.photoUrl,
-        //   username: user.displayName,
+        uid: user.uid,
+        avatar: user.photoUrl,
+        username: user.displayName,
         //入力データ
         actImage: "",
         acttitle: acttitle,
@@ -206,6 +215,8 @@ const SportsAct = (props) => {
         // sportsname: props.sportsname,
       });
     }
+    setAct("");
+
     setActImage(null);
     setActtitle("");
     setActcomment("");
@@ -215,30 +226,28 @@ const SportsAct = (props) => {
     // setSportsId("");
     // setSportsname("");
     // setSportsno("");
-    
   };
-
 
   return (
     <>
-    <Card className={classes.root}> 
-      <CardHeader 
-        avatar={
-            <Avatar src={props.avatar} className={classes.avatar} />
-            }
-            action={
-                <IconButton aria-label="settings">
-                <MoreVertIcon />
-                </IconButton>
-            }
-            title={props.sportsname}
-            subheader={props.detail}
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={
+            <Avatar src={props.sportsavatar} className={classes.avatar} />
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title={props.sportsname}
+          subheader={props.detail}
         />
 
-      {/* <div> */}
+        {/* <div> */}
         {/* スポーツ情報 */}
         {/* <div> */}
-          {/* <Typography>
+        {/* <Typography>
             <span>{props.sportsname}</span>
           </Typography> */}
         {/* </div> */}
@@ -246,94 +255,92 @@ const SportsAct = (props) => {
         {/* <div>
           <Typography>スポーツ詳細</Typography>
         </div> */}
-      {/* </div> */}
-      <div>
-      {props.image && (
-          <CardMedia
-          className={classes.media}
-          image={props.image}
-          title={props.sportsname}
-        />
-        // <div>
-        //   <img src={props.image} alt="sport" />
-        // </div>
-      )}
-      </div>
+        {/* </div> */}
+        <div>
+          {props.image && (
+            <CardMedia
+              className={classes.media}
+              image={props.image}
+              title={props.sportsname}
+            />
+            // <div>
+            //   <img src={props.image} alt="sport" />
+            // </div>
+          )}
+        </div>
 
-      <div>
         <div>
-        <Typography>ユーザーの体験情報</Typography>
-        {/* ユーザのスポーツ情報 */}
+          <div>
+            <Typography>ユーザーの体験情報</Typography>
+            {/* ユーザのスポーツ情報 */}
+          </div>
+          <div>
+            {acts.map((act) => (
+              <div key={act.id}>
+                <Avatar src={act.avatar} />
+                {/* <span>@{act.username}</span> */}
+                <Typography>{act.acttitle} </Typography>
+                <Typography>{act.actcomment}</Typography>
+                <Typography>{act.level}</Typography>
+                <Typography>{act.date}</Typography>
+                <Typography>
+                  {new Date(act.timestamp?.toDate()).toLocaleString()}
+                </Typography>
+              </div>
+            ))}
+          </div>
+          {props.image && (
+            <CardMedia
+              className={classes.media}
+              image={act.actimage}
+              title={act.acttitle}
+            />
+          )}
         </div>
         <div>
-          {acts.map((act) => (
-            <div key={act.id}>
-              <Avatar src={act.avatar} />
-              {/* <span>@{act.username}</span> */}
-              <Typography>{act.acttitle} </Typography>
-              <Typography>{act.actcomment}</Typography>
-              <Typography>{act.level}</Typography>
-              <Typography>{act.date}</Typography>
-              <Typography>{new Date(act.timestamp?.toDate()).toLocaleString()}</Typography>
-        </div>
-          ))}
-        </div>
-        {props.image && (
-          <CardMedia
-          className={classes.media}
-          image={act.actimage}
-          title={act.acttitle}
-        />
-      )}
-      </div>
-      <div>
-      {/* コメント用フォーム */}
-        <form onSubmit={sendAct}>
+          {/* コメント用フォーム */}
+          <form onSubmit={sendAct}>
             <div>
-                <input
+              <input
                 type="acttitle"
                 placeholder="一言コメント"
                 value={acttitle}
                 onChange={(e) => setActtitle(e.target.value)}
-                />
-                <input
+              />
+              <input
                 type="actcomment"
                 placeholder="感想を自由に書いてください"
                 value={actcomment}
                 onChange={(e) => setActcomment(e.target.value)}
-                />
-                
-                <Button
+              />
+
+              <Button
                 disabled={!acttitle}
                 // className={
                 //     comment ? styles.post_button : styles.post_buttonDisable
                 // }
                 type="submit"
-                >
+              >
                 <SendIcon />
-                </Button>
+              </Button>
             </div>
-        </form>
-      </div>
-
-
-      
-    </Card>
+          </form>
+        </div>
+      </Card>
     </>
   );
 };
 
 export default SportsAct;
 
-
 // ユーザ情報
 //   avatar: user.photoUrl,
 //   uid: user.uid,
 //   username: user.displayName,
 //   投稿内容
-    //   actimage: url,
-    //   acttitle: acttitle,
-    //   actcomment: actcomment,
-    //   level: level,
-    //   date: date,
-    //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+//   actimage: url,
+//   acttitle: acttitle,
+//   actcomment: actcomment,
+//   level: level,
+//   date: date,
+//   timestamp: firebase.firestore.FieldValue.serverTimestamp(),

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, FormControl, TextField, Typography } from "@material-ui/core";
 import { auth, provider, storage } from "./firebase";
-
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "./features/userSlice";
 //構成テンプレート
 import styles from "./Login.module.css";
 import Avatar from "@material-ui/core/Avatar";
@@ -64,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   //ログイン状態の保持
   const [isLogin, setIsLogin] = useState(true);
 
@@ -122,12 +124,12 @@ const Login = (props) => {
       displayName: username,
       photoURL: url,
     });
-    // dispatch(
-    //   updateUserProfile({
-    //     displayName: username,
-    //     photoUrl: url,
-    //   })
-    // );
+    dispatch(
+      updateUserProfile({
+        displayName: username,
+        photoUrl: url,
+      })
+    );
   };
 
   useEffect(() => {
@@ -148,149 +150,147 @@ const Login = (props) => {
           {isLogin ? "Login" : "Register"}
         </Typography>
         <form className={classes.form} noValidate>
-            {/* フィールドのセット */}
-            {!isLogin && (
-              <>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  autoFocus
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
-                />
-                {/* アバター画像登録onChangeImageHandler呼び出し */}
-                <Box textAlign="center">
-                  <IconButton>
-                    <label>
-                      <AccountCircleIcon
-                        fontSize="large"
-                        className={
-                          avatarImage
-                            ? styles.login_addIconLoaded
-                            : styles.login_addIcon
-                        }
-                      />
-                      <input
-                        className={styles.login_hiddenIcon}
-                        type="file"
-                        onChange={onChangeImageHandler}
-                      />
-                    </label>
-                  </IconButton>
-                </Box>
-              </>
-            )}
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
+          {/* フィールドのセット */}
+          {!isLogin && (
+            <>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+              />
+              {/* アバター画像登録onChangeImageHandler呼び出し */}
+              <Box textAlign="center">
+                <IconButton>
+                  <label>
+                    <AccountCircleIcon
+                      fontSize="large"
+                      className={
+                        avatarImage
+                          ? styles.login_addIconLoaded
+                          : styles.login_addIcon
+                      }
+                    />
+                    <input
+                      className={styles.login_hiddenIcon}
+                      type="file"
+                      onChange={onChangeImageHandler}
+                    />
+                  </label>
+                </IconButton>
+              </Box>
+            </>
+          )}
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
 
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            {/* サインイン */}
-            <Button
-              // 文字が少ないとボタン押せませんよ
-              disabled={
-                isLogin
-                  ? !email || password.length < 6
-                  : !username || !email || password.length < 6 || !avatarImage
-              }
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              startIcon={<EmailIcon />}
-              onClick={
-                isLogin
-                  ? async () => {
-                      try {
-                        await signInEmail();
-                      } catch (err) {
-                        alert(err.message);
-                      }
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
+          {/* サインイン */}
+          <Button
+            // 文字が少ないとボタン押せませんよ
+            disabled={
+              isLogin
+                ? !email || password.length < 6
+                : !username || !email || password.length < 6 || !avatarImage
+            }
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            startIcon={<EmailIcon />}
+            onClick={
+              isLogin
+                ? async () => {
+                    try {
+                      await signInEmail();
+                    } catch (err) {
+                      alert(err.message);
                     }
-                  : async () => {
-                      try {
-                        await signUpEmail();
-                      } catch (err) {
-                        alert(err.message);
-                      }
+                  }
+                : async () => {
+                    try {
+                      await signUpEmail();
+                    } catch (err) {
+                      alert(err.message);
                     }
-              }
-            >
-              {isLogin ? "Login" : "Register"}
-            </Button>
-            {/* パスワード忘れ */}
-            <Grid container>
-              <Grid item xs>
-                <span
-                  className={styles.login_reset}
-                  onClick={() => setOpenModal(true)}
-                >
-                  Forgot password ?
-                </span>
-              </Grid>
-              {/* Resisterにするか？ CSSのトグルモード*/}
-              {/* xsを消すと右寄りに   <Grid item xs> */}
-              <Grid item>
-                <span
-                  className={styles.login_toggleMode}
-                  onClick={() => setIsLogin(!isLogin)}
-                >
-                  {isLogin ? "Create new account ?" : "Back to login"}
-                </span>
-              </Grid>
+                  }
+            }
+          >
+            {isLogin ? "Login" : "Register"}
+          </Button>
+          {/* パスワード忘れ */}
+          <Grid container>
+            <Grid item xs>
+              <span
+                className={styles.login_reset}
+                onClick={() => setOpenModal(true)}
+              >
+                Forgot password ?
+              </span>
             </Grid>
+            {/* Resisterにするか？ CSSのトグルモード*/}
+            {/* xsを消すと右寄りに   <Grid item xs> */}
+            <Grid item>
+              <span
+                className={styles.login_toggleMode}
+                onClick={() => setIsLogin(!isLogin)}
+              >
+                {isLogin ? "Create new account ?" : "Back to login"}
+              </span>
+            </Grid>
+          </Grid>
 
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              startIcon={<CameraIcon />}
-              onClick={signInGoogle}
-            >
-              SignIn with Google
-            </Button>
-          </form>
-
-
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            startIcon={<CameraIcon />}
+            onClick={signInGoogle}
+          >
+            SignIn with Google
+          </Button>
+        </form>
       </div>
     </Container>
   );
@@ -298,67 +298,68 @@ const Login = (props) => {
 
 export default Login;
 
-
-          {/* 前の設定 */}
-        //   <div justify="center">
-        //   <FormControl>
-        //     <TextField
-        //       name="email"
-        //       label="E-mail"
-        //       value={email} //useStateのEメールが入ってくる
-        //       onChange={(e) => setEmail(e.target.value)}
-        //     />
-        //   </FormControl>
-        //   <br />
-        //   {/* パスワードフォーム*/}
-        //   <FormControl>
-        //     <TextField
-        //       name="password"
-        //       label="Password"
-        //       type="password"
-        //       value={password} //useStateのEメールが入ってくる
-        //       onChange={(e) => setPassword(e.target.value)}
-        //     />
-        //   </FormControl>
-        //   <br />
-        //   <Button
-        //     variant="contained"
-        //     color="primary"
-        //     size="small"
-        //     //   ボタンを押した時の登録処理を書く
-        //     onClick={
-        //       isLogin //Login成功してる時
-        //         ? async () => {
-        //             try {
-        //               await auth.signInWithEmailAndPassword(email, password);
-        //               props.history.push("/");
-        //             } catch (error) {
-        //               //ログインできない時、失敗した時はえらーMSG
-        //               alert(error.message);
-        //             }
-        //           }
-        //         : async () => {
-        //             try {
-        //               // 新規登録　作成時 firebaseに[createUserWithEmailAndPassword]というものがあるのでそれに
-        //               // email, passwordで保持した状態を送り→成功すればhistoryによって画面遷移が実行される
-        //               await auth.createUserWithEmailAndPassword(
-        //                 email,
-        //                 password
-        //               );
-        //               props.history.push("/");
-        //             } catch (error) {
-        //               // ログインできない、失敗したときはエラーで表示される
-        //               alert(error.message);
-        //             }
-        //           }
-        //     }
-        //   >
-        //     {isLogin ? "ログインする" : "登録する"}
-        //   </Button>
-        //   {/* ここに追加 */}
-        //   <Typography align="center">
-        //     <span onClick={() => setIsLogin(!isLogin)}>
-        //       {isLogin ? "Create new account ?" : "Back to Login"}
-        //     </span>
-        //   </Typography>
-        // </div>
+{
+  /* 前の設定 */
+}
+//   <div justify="center">
+//   <FormControl>
+//     <TextField
+//       name="email"
+//       label="E-mail"
+//       value={email} //useStateのEメールが入ってくる
+//       onChange={(e) => setEmail(e.target.value)}
+//     />
+//   </FormControl>
+//   <br />
+//   {/* パスワードフォーム*/}
+//   <FormControl>
+//     <TextField
+//       name="password"
+//       label="Password"
+//       type="password"
+//       value={password} //useStateのEメールが入ってくる
+//       onChange={(e) => setPassword(e.target.value)}
+//     />
+//   </FormControl>
+//   <br />
+//   <Button
+//     variant="contained"
+//     color="primary"
+//     size="small"
+//     //   ボタンを押した時の登録処理を書く
+//     onClick={
+//       isLogin //Login成功してる時
+//         ? async () => {
+//             try {
+//               await auth.signInWithEmailAndPassword(email, password);
+//               props.history.push("/");
+//             } catch (error) {
+//               //ログインできない時、失敗した時はえらーMSG
+//               alert(error.message);
+//             }
+//           }
+//         : async () => {
+//             try {
+//               // 新規登録　作成時 firebaseに[createUserWithEmailAndPassword]というものがあるのでそれに
+//               // email, passwordで保持した状態を送り→成功すればhistoryによって画面遷移が実行される
+//               await auth.createUserWithEmailAndPassword(
+//                 email,
+//                 password
+//               );
+//               props.history.push("/");
+//             } catch (error) {
+//               // ログインできない、失敗したときはエラーで表示される
+//               alert(error.message);
+//             }
+//           }
+//     }
+//   >
+//     {isLogin ? "ログインする" : "登録する"}
+//   </Button>
+//   {/* ここに追加 */}
+//   <Typography align="center">
+//     <span onClick={() => setIsLogin(!isLogin)}>
+//       {isLogin ? "Create new account ?" : "Back to Login"}
+//     </span>
+//   </Typography>
+// </div>
