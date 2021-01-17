@@ -3,23 +3,53 @@ import { db, auth, storage } from "./firebase";
 import firebase from "firebase/app";
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
-import { Avatar, Typography, Button } from "@material-ui/core";
+import { Avatar, Typography, Button, TextField, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // import MessageIcon from "@material-ui/icons/Message";
 import SendIcon from "@material-ui/icons/Send";
-// import clsx from 'clsx';
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
+import Modal from "@material-ui/core/Modal";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import CameraIcon from "@material-ui/icons/Camera";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 
 import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-// Redux書き方
-// import { db, auth, provider, storage } from "./firebase";
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -48,29 +78,53 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
+  paper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+  // MuiCardHeaderTitle: {
+  //   fontSize: 30,
+  // },
+  // titleCardHeader{
+  //   fontSize: 30,
+  // },
+
+  // },
+  // title: {
+  //   margin: auto,
+  // },
+  // modal: {
+  //   outline: "none",
+  //   position: "absolute",
+  //   width: 400,
+  //   borderRadius: 10,
+  //   backgroundColor: "white",
+  //   boxShadow: theme.shadows[5],
+  //   padding: theme.spacing(10),
+  // },
 }));
 
 // SportsExpからスポーツの情報(sports)がpropsに入ってる場合
 const SportsAct = (props) => {
   const user = useSelector(selectUser);
-  // User情報取得
-  // const [user, setUser] = useState(null);
-  // useEffect(() => {
-  //     const unSub = auth.onAuthStateChanged((authUser) => {
-  //       if (authUser){ setUser(authUser);
-  //       }else{ setUser(null);
-  //       };
-  //     });
-  //       return () => unSub();
-  //     },);
-  // 例 UID: {user && user.uid}
-
   const classes = useStyles();
-  // Redux
-  //   const user = useSelector(selectUser);
 
   // コメントの表示非表示の切り替え
   //   const [openComments, setOpenComments] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   //   コメント追加用
   const [act, setAct] = useState("");
 
@@ -78,11 +132,12 @@ const SportsAct = (props) => {
   const [actImage, setActImage] = useState(null);
   const [actcomment, setActcomment] = useState("");
   const [level, setLevel] = useState("");
-  const [date, setDate] = useState("");
-  //   素のデータだけどせっとするから書く
-  //   const [sportsId, setSportsId] = useState("");
-  //   const [sportsname, setSportsname] = useState("");
-  //   const [sportsno, setSportsno] = useState("");
+  const [actDate, setActDate] = useState(new Date());
+
+  //   素のデータだけどセットするから書く
+  // const [sportsId, setSportsId] = useState("");
+  // const [sportsname, setSportsname] = useState("");
+  // const [sportsno, setSportsno] = useState("");
   // actsの箱を作る(ここで宣言したから表示できる)
   const [acts, setActs] = useState([
     {
@@ -92,14 +147,15 @@ const SportsAct = (props) => {
       username: "",
       //  ↑投稿者情報  ↓投稿情報
       acttitle: "",
-      actImage: null,
+      actImage: "",
       actcomment: "",
       level: "",
-      date: "",
+      actDate: null,
       timestamp: null,
-      // sportsId: "",
-      // sportsname: "",
-      // sportsno: "",
+      sportsId: "",
+      sportsname: "",
+      sportsno: "",
+      sportsimage: "",
     },
   ]);
 
@@ -109,6 +165,14 @@ const SportsAct = (props) => {
       e.target.value = "";
     }
   };
+
+  const handleDateChange = (date) => {
+    setActDate(date);
+  };
+  const handleChange = (event) => {
+    setLevel(event.target.value);
+  };
+
   //   過去のコメントを取得（受信処理）
   //   データをとってくる sports(props)にアクセスして、その中のactを取得してuseStateで代入
   useEffect(() => {
@@ -118,19 +182,22 @@ const SportsAct = (props) => {
       .collection("acts")
       .where("uid", "==", user.uid)
       .orderBy("timestamp", "desc")
+      .limit(1)
       .onSnapshot((snapshot) => {
         setActs(
           snapshot.docs.map((doc) => ({
             id: doc.id,
             // sportsのドキュメントid(上から受信)
-            // sportsId: doc.data().sportsId,
+            sportsId: doc.data().sportsId,
             // sportsno: doc.data().sportsno,
-            // sportsname: doc.data().sportsname,
+            sportsname: doc.data().sportsname,
+            sportsimage: doc.data().sportsimage,
             // 投稿の情報
             acttitle: doc.data().acttitle,
             actcomment: doc.data().actcomment,
             level: doc.data().level,
-            date: doc.data().date,
+            actDate: doc.data().actDate,
+            actImage: doc.data().actImage,
             timestamp: doc.data().timestamp,
             // ここは確かめるユーザーデータを使う
             uid: doc.data().uid,
@@ -145,6 +212,8 @@ const SportsAct = (props) => {
     // 投稿のIDが変わった場合は対象の投稿のコメントを入れる。
   }, [props.sportsId]);
 
+  // console.log(acts);
+
   // 送信処理をかくactはsports毎につくので
   const sendAct = (e) => {
     e.preventDefault();
@@ -157,8 +226,8 @@ const SportsAct = (props) => {
         .join("");
       const fileName = randomChar + "_" + actImage.name;
       // firebase storageに登録する処理
-      const uploadTweetImg = storage.ref(`actimages/${fileName}`).put(actImage);
-      uploadTweetImg.on(
+      const uploadActImg = storage.ref(`actimages/${fileName}`).put(actImage);
+      uploadActImg.on(
         firebase.storage.TaskEvent.STATE_CHANGED,
         () => {},
         (err) => {
@@ -182,15 +251,16 @@ const SportsAct = (props) => {
                   uid: user.uid,
                   username: user.displayName,
                   // 投稿内容
-                  actimage: url,
+                  actImage: url,
                   acttitle: acttitle,
                   actcomment: actcomment,
                   level: level,
-                  date: date,
+                  actDate: actDate,
                   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                  //   sportsId: props.sportsId,
-                  //   sportsno: props.sportsno,
-                  //   sportsname: props.sportsname,
+                  // スポーツ情報
+                  sportsId: props.sportsId,
+                  // sportsno: props.sportsno,
+                  sportsname: props.sportsname,
                 });
             });
         }
@@ -207,12 +277,13 @@ const SportsAct = (props) => {
         acttitle: acttitle,
         actcomment: actcomment,
         level: level,
-        date: date,
+        actDate: actDate,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         // スポーツのデータ
-        // sportsId: props.sportsId,
+        sportsId: props.sportsId,
         // sportsno: props.sportsno,
-        // sportsname: props.sportsname,
+        sportsname: props.sportsname,
+        sportsimage: props.image,
       });
     }
     setAct("");
@@ -222,58 +293,170 @@ const SportsAct = (props) => {
     setActcomment("");
     setActtitle("");
     setLevel("");
-    setDate("");
-    // setSportsId("");
-    // setSportsname("");
-    // setSportsno("");
+    setActDate(null);
   };
 
   return (
     <>
       <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar src={props.sportsavatar} className={classes.avatar} />
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
+        <CardHeader className="cardHeader"
+          avatar={<Avatar src={props.image} variant="rounded" className={classes.avatar} />}
+          // action={
+          //   <IconButton aria-label="settings">
+          //     <MoreVertIcon />
+          //   </IconButton>
+          // }
           title={props.sportsname}
-          subheader={props.detail}
+          // subheader={props.detail}
         />
-
-        {/* <div> */}
-        {/* スポーツ情報 */}
-        {/* <div> */}
-        {/* <Typography>
-            <span>{props.sportsname}</span>
-          </Typography> */}
-        {/* </div> */}
-        {/* スポーツの詳細情報を表示 　ーーー　後で設定*/}
         {/* <div>
-          <Typography>スポーツ詳細</Typography>
-        </div> */}
-        {/* </div> */}
-        <div>
           {props.image && (
             <CardMedia
               className={classes.media}
               image={props.image}
               title={props.sportsname}
             />
-            // <div>
-            //   <img src={props.image} alt="sport" />
-            // </div>
           )}
-        </div>
+        </div> */}
 
         <div>
+          <div>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleClickOpen}
+            >
+              やったよ！登録
+            </Button>
+            {/* コメント用フォーム */}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">
+                スポーツ経験を登録する
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>楽しい経験を登録しよう！</DialogContentText>
+                <form onSubmit={sendAct}>
+                  <div>
+                    <div>
+                      <Box textAlign="center">
+                        <IconButton>
+                          <label>
+                            <AddAPhotoIcon
+                              color="primary"
+                              fontSize="large"
+                              className={actImage}
+                            />
+                            <input
+                              type="file"
+                              onChange={onChangeImageHandler}
+                            />
+                          </label>
+                        </IconButton>
+                      </Box>
+                    </div>
+                    <div>
+                      <Typography>タイトル</Typography>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        type="acttitle"
+                        placeholder="題名・一言！*必須項目"
+                        value={acttitle}
+                        onChange={(e) => setActtitle(e.target.value)}
+                      />
+                      <Typography>感想</Typography>
+                      <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        multiline
+                        rows={3}
+                        type="actcomment"
+                        placeholder="感想を自由に書いてください"
+                        value={actcomment}
+                        onChange={(e) => setActcomment(e.target.value)}
+                      />
+                    </div>
+                    <FormLabel component="legend">Level</FormLabel>
+                    <RadioGroup
+                      aria-label="level"
+                      name="level"
+                      value={level}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="4"
+                        control={<Radio />}
+                        label="試合したよ"
+                      />
+                      <FormControlLabel
+                        value="3"
+                        control={<Radio />}
+                        label="レッスン受けたよ"
+                      />
+                      <FormControlLabel
+                        value="2"
+                        control={<Radio />}
+                        label="ちょこっと体験"
+                      />
+                      <FormControlLabel
+                        value="1"
+                        control={<Radio />}
+                        label="なりきり写真！"
+                      />
+                    </RadioGroup>
+                  </div>
+                  <div>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify="space-around">
+                        <KeyboardDatePicker
+                          margin="normal"
+                          id="date-picker-dialog"
+                          label="Date picker dialog"
+                          format="MM/dd/yyyy"
+                          value={actDate}
+                          onChange={handleDateChange}
+                          KeyboardButtonProps={{
+                            "aria-label": "change date",
+                          }}
+                        />
+                      </Grid>
+                    </MuiPickersUtilsProvider>
+                  </div>
+                  <div>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      disabled={!acttitle}
+                      type="submit"
+                      onClick={handleClose}
+                    >
+                      <Typography>登録する</Typography>
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                  Cancel
+                </Button>
+                {/* <Button onClick={handleClose} color="primary">
+                Subscribe
+              </Button> */}
+              </DialogActions>
+            </Dialog>
+          </div>
           <div>
             <Typography>ユーザーの体験情報</Typography>
             {/* ユーザのスポーツ情報 */}
           </div>
+
           <div>
             {acts.map((act) => (
               <div key={act.id}>
@@ -282,49 +465,25 @@ const SportsAct = (props) => {
                 <Typography>{act.acttitle} </Typography>
                 <Typography>{act.actcomment}</Typography>
                 <Typography>{act.level}</Typography>
-                <Typography>{act.date}</Typography>
+                <Typography>
+                  {act.actDate &&
+                    new Date(act.actDate?.toDate()).toLocaleString()}
+                </Typography>
                 <Typography>
                   {new Date(act.timestamp?.toDate()).toLocaleString()}
                 </Typography>
+                <div>
+                  {act.actImage && (
+                    <CardMedia
+                      className={classes.media}
+                      image={act.actImage}
+                      title={act.acttitle}
+                    />
+                  )}
+                </div>
               </div>
             ))}
           </div>
-          {props.image && (
-            <CardMedia
-              className={classes.media}
-              image={act.actimage}
-              title={act.acttitle}
-            />
-          )}
-        </div>
-        <div>
-          {/* コメント用フォーム */}
-          <form onSubmit={sendAct}>
-            <div>
-              <input
-                type="acttitle"
-                placeholder="一言コメント"
-                value={acttitle}
-                onChange={(e) => setActtitle(e.target.value)}
-              />
-              <input
-                type="actcomment"
-                placeholder="感想を自由に書いてください"
-                value={actcomment}
-                onChange={(e) => setActcomment(e.target.value)}
-              />
-
-              <Button
-                disabled={!acttitle}
-                // className={
-                //     comment ? styles.post_button : styles.post_buttonDisable
-                // }
-                type="submit"
-              >
-                <SendIcon />
-              </Button>
-            </div>
-          </form>
         </div>
       </Card>
     </>
@@ -332,6 +491,23 @@ const SportsAct = (props) => {
 };
 
 export default SportsAct;
+
+// メダル　<a href='https://ja.pngtree.com/so/メダルクリップ'>メダルクリップ pngから ja.pngtree.com</a>
+{
+  /* <a href='https://ja.pngtree.com/so/メダルクリップ'>メダルクリップ pngから ja.pngtree.com</a> */
+}
+
+// User情報取得
+// const [user, setUser] = useState(null);
+// useEffect(() => {
+//     const unSub = auth.onAuthStateChanged((authUser) => {
+//       if (authUser){ setUser(authUser);
+//       }else{ setUser(null);
+//       };
+//     });
+//       return () => unSub();
+//     },);
+// 例 UID: {user && user.uid}
 
 // ユーザ情報
 //   avatar: user.photoUrl,

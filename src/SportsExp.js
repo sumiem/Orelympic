@@ -8,12 +8,9 @@ import { selectUser, login, logout } from "./features/userSlice";
 import SportsAct from "./SportsAct"
 
 import AppBar from "@material-ui/core/AppBar";
-
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import Gridlist from '@material-ui/core/GridList';
 
 
@@ -56,17 +53,6 @@ const useStyles = makeStyles((theme) => ({
 const SportsExp = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-    // ユーザ情報の取得
-    // const [user, setUser] = useState(null);
-    // useEffect(() => {
-    //     const unSub = auth.onAuthStateChanged((authUser) => {
-    //       if (authUser){ setUser(authUser);
-    //       }else{ setUser(null);
-    //       };
-    //     });
-    //       return () => unSub();
-    //     },);
-        // 例 UID: {user && user.uid}
     const classes = useStyles();
     const [sports, setSports] = useState([
         {
@@ -105,9 +91,7 @@ const SportsExp = () => {
         };
       }, []);
     
-    // firebaseの情報を取得します
 
-    // 表示
     return (
         <>
         <CssBaseline />
@@ -116,7 +100,7 @@ const SportsExp = () => {
         </AppBar>
         <div>
             <Typography>スポーツ一覧</Typography></div>
-            {/* ここ書き方あとでちぇっくして */}
+            {/* ログアウトの書き方あとでちぇっくして */}
             <Button
                   color="inherit"
                   id="menu-appbar"
@@ -126,9 +110,7 @@ const SportsExp = () => {
                 >
                   Logout
                 </Button>
-                <button
-
-        >
+        <button>
           logout
         </button>
         {/* <div>{props.sportsname}</div> */}
@@ -145,7 +127,7 @@ const SportsExp = () => {
               sportsId={sport.id}
               image={sport.image}
               sportsname={sport.sportsname}
-              sportsno={sport.sportsno}
+              sportsno={sport.sportsid}
               detail={sport.detail}
               timestamp={sport.timestamp}
               uername={sport.username}
@@ -164,7 +146,17 @@ const SportsExp = () => {
 
 export default SportsExp
 
-
+    // ユーザ情報の取得（Reduxを使わなかった場合）↓ thenをsetUserの前に持ってくると解決するかも（実証まだ）
+    // const [user, setUser] = useState(null);
+    // useEffect(() => {
+    //     const unSub = auth.onAuthStateChanged((authUser) => {
+    //       if (authUser){ setUser(authUser);
+    //       }else{ setUser(null);
+    //       };
+    //     });
+    //       return () => unSub();
+    //     },);
+        // 例 UID: {user && user.uid}
         
 {/* <Container className={classes.cardGrid} maxWidth="md">
 <Grid container spacing={4}>
