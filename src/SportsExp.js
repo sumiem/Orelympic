@@ -6,12 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "./features/userSlice";
 
 import SportsAct from "./SportsAct"
+import NavBar from "./NavBar"
 
 import AppBar from "@material-ui/core/AppBar";
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Gridlist from '@material-ui/core/GridList';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -47,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     footer: {
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(6),
+    },
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
     },
 }));
 
@@ -95,9 +102,7 @@ const SportsExp = () => {
     return (
         <>
         <CssBaseline />
-        <AppBar position="relative">
-
-        </AppBar>
+        <NavBar />
         <div>
             <Typography>スポーツ一覧</Typography></div>
             {/* ログアウトの書き方あとでちぇっくして */}
@@ -120,7 +125,9 @@ const SportsExp = () => {
         {/* sportsがあって、idがある場合 */}
         {sports[0]?.id && (
           <>
-            <Gridlist>
+          <Container className={classes.cardGrid} maxWidth="lg">
+          {/* <Grid container spacing={2}> */}
+            <Gridlist container spacing={4}>
             {sports.map((sport) => (
               <SportsAct
               key={sport.id}
@@ -135,6 +142,8 @@ const SportsExp = () => {
               />
             ))}
             </Gridlist>
+            {/* </Grid> */}
+            </Container>
           </>
         )}
 

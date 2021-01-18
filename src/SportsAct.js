@@ -32,9 +32,16 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import CameraIcon from "@material-ui/icons/Camera";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import GridList from "@material-ui/core/GridList";
 import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
+import mainVisual from "./img/Mainvisual2.jpg";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
 
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
@@ -50,6 +57,7 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`,
   };
 }
+var moment = require("moment");
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -58,12 +66,15 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
   root: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
     maxWidth: 360,
-    maxHeight: 2000,
+    // maxHeight: 2000,
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+      height: 0,
+      paddingTop: "56.25%", // 16:9
   },
   expand: {
     transform: "rotate(0deg)",
@@ -86,9 +97,20 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  // MuiCardHeaderTitle: {
-  //   fontSize: 30,
-  // },
+
+  cardContent: {
+    flexGrow: 1,
+  },
+  title: {
+    color: theme.palette.primary.light,
+  },
+  titleBar: {
+    background:
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
+  MuiCardHeaderTitle: {
+    fontSize: 30,
+  },
   // titleCardHeader{
   //   fontSize: 30,
   // },
@@ -298,18 +320,26 @@ const SportsAct = (props) => {
 
   return (
     <>
-      <Card className={classes.root}>
-        <CardHeader className="cardHeader"
-          avatar={<Avatar src={props.image} variant="rounded" className={classes.avatar} />}
-          // action={
-          //   <IconButton aria-label="settings">
-          //     <MoreVertIcon />
-          //   </IconButton>
-          // }
-          title={props.sportsname}
-          // subheader={props.detail}
-        />
-        {/* <div>
+      <Grid item key={props} xs={12} sm={3} md={4}>
+        <Card className={classes.root}>
+          <CardHeader
+            className="cardHeader"
+            avatar={
+              <Avatar
+                src={props.image}
+                variant="rounded"
+                className={classes.avatar}
+              />
+            }
+            // action={
+            //   <IconButton aria-label="settings">
+            //     <MoreVertIcon />
+            //   </IconButton>
+            // }
+            title={props.sportsname}
+            // subheader={props.detail}
+          />
+          {/* <div>
           {props.image && (
             <CardMedia
               className={classes.media}
@@ -319,8 +349,7 @@ const SportsAct = (props) => {
           )}
         </div> */}
 
-        <div>
-          <div>
+          <CardActions textAlign="right" justify="center">
             <Button
               variant="outlined"
               color="primary"
@@ -328,11 +357,12 @@ const SportsAct = (props) => {
             >
               やったよ！登録
             </Button>
-            {/* コメント用フォーム */}
             <Dialog
               open={open}
               onClose={handleClose}
               aria-labelledby="form-dialog-title"
+              fullWidth
+              maxWidth="md"
             >
               <DialogTitle id="form-dialog-title">
                 スポーツ経験を登録する
@@ -451,41 +481,48 @@ const SportsAct = (props) => {
               </Button> */}
               </DialogActions>
             </Dialog>
-          </div>
-          <div>
-            <Typography>ユーザーの体験情報</Typography>
-            {/* ユーザのスポーツ情報 */}
-          </div>
+          </CardActions>
 
-          <div>
-            {acts.map((act) => (
-              <div key={act.id}>
-                <Avatar src={act.avatar} />
-                {/* <span>@{act.username}</span> */}
-                <Typography>{act.acttitle} </Typography>
-                <Typography>{act.actcomment}</Typography>
-                <Typography>{act.level}</Typography>
-                <Typography>
-                  {act.actDate &&
-                    new Date(act.actDate?.toDate()).toLocaleString()}
-                </Typography>
-                <Typography>
-                  {new Date(act.timestamp?.toDate()).toLocaleString()}
-                </Typography>
-                <div>
-                  {act.actImage && (
-                    <CardMedia
-                      className={classes.media}
-                      image={act.actImage}
-                      title={act.acttitle}
-                    />
-                  )}
+          {/* <div>
+              <Typography>ユーザーの体験情報</Typography>
+            </div> */}
+          <CardContent className={classes.cardContent}>
+            <div>
+              {acts.map((act) => (
+                <div key={act.id}>
+                  <div>
+                    {act.actImage && (
+                      <CardMedia
+                        className={classes.media}
+                        image={act.actImage}
+                        title={act.acttitle}
+                      />
+                    )}
+                    {!act.actImage && (
+                      <CardMedia
+                        className={classes.media}
+                        image={mainVisual}
+                        title="イメージなし"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <Typography>{act.acttitle} </Typography>
+                    <Typography>{act.actcomment}</Typography>
+                    <Typography>{act.level}</Typography>
+                    <Typography>
+                      {act.actDate &&
+                        moment(new Date(act.actDate?.toDate())).format(
+                          "Do MMM"
+                        )}
+                    </Typography>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </Grid>
     </>
   );
 };
@@ -520,3 +557,26 @@ export default SportsAct;
 //   level: level,
 //   date: date,
 //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
+{
+  /* {acts.map((act) => ( */
+}
+{
+  /* // <div key={act.id}> */
+}
+{
+  /* <Avatar src={act.avatar} /> */
+}
+{
+  /* <GridListTile key={act.img} imgFullWidth>
+                  {act.actImage && (
+                    <img src={act.actImage} alt={act.acttitle} className={classes.media}/>
+                    )}
+                    <GridListTileBar
+                        title={act.acttitle}
+                        classes={{
+                          root: classes.titleBar,
+                          title: classes.title,
+                        }}/>                  
+                  </GridListTile> */
+}

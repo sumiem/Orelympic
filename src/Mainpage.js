@@ -53,16 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-// データベースからとってくる
-// const beach = {
-//   name: "ビーチバレー",
-//   desc: "XXXXXXXXXXXXXXXXXXXXXXXXX",
-//   image:"https://source.unsplash.com/random"
-// };
-
-// const cards = [beach, basket];
 
 const Mainpage = (props) => {
   useEffect(() => {

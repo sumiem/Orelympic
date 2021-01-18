@@ -61,19 +61,16 @@ const App = (props) => {
       {/* <Login /> */}
       {/* // userいるとき、Feed　いない時Auth */}
     {/* )} */}
-    
-  
-      <div>
+    <Switch>
       {user.uid ? (
       <Route exact path="/" component={Mainpage} />
       // <div><Mainpage /></div>
       ): (<Route exact path="/login" component={Login} />)};
       {/* <Route exact path="/login" component={Login} /> */}
 
-       <Route exact path="/home" component={Home} />
+      <Route exact path="/home" component={Home} />
       <Route exact path="/sportsexp" component={SportsExp} />
-
-      </div>
+      </Switch>
     </Router>
     {/* <div>
     <Mainpage />
