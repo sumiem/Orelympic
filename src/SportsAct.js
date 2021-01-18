@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db, auth, storage } from "./firebase";
+import { db, storage } from "./firebase";
 import firebase from "firebase/app";
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
@@ -39,6 +39,8 @@ import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
 import mainVisual from "./img/Mainvisual2.jpg";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import goldMedal from "./img/goldMedal.png";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -65,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
     marginRight: theme.spacing(1),
   },
+  large: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+  },
   root: {
     height: "100%",
     display: "flex",
@@ -72,9 +78,22 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     // maxHeight: 2000,
   },
+  root2: {
+    display: "flex",
+  },
+  // content: {
+  //   flex: '1 0 auto',
+  // },
   media: {
-      height: 0,
-      paddingTop: "56.25%", // 16:9
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+    // position: 'absolute',
+    // left: 0,
+    // right: 0,
+    // top: 0,
+    // bottom: 0,
+    // backgroundSize: 'cover',
+    // backgroundPosition: 'center 40%',
   },
   expand: {
     transform: "rotate(0deg)",
@@ -100,6 +119,7 @@ const useStyles = makeStyles((theme) => ({
 
   cardContent: {
     flexGrow: 1,
+    postision: "relative",
   },
   title: {
     color: theme.palette.primary.light,
@@ -110,6 +130,73 @@ const useStyles = makeStyles((theme) => ({
   },
   MuiCardHeaderTitle: {
     fontSize: 30,
+      },
+
+  imageTitle: {
+    position: "relative",
+  },
+  imageButton: {
+    position: 'absolute',
+    left: `$50%`,
+    right: -15,
+    top: -35,
+    bottom: `$30%`,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.palette.common.white,
+  },
+
+  image2: {
+    width: 128,
+    height: 128,
+  },
+  image5: {
+    position: 'relative',
+    height: 200,
+  },
+  img: {
+    // margin: "auto",
+    // display: "block",
+    position: "relative",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: -100,
+    // display: "flex",
+    // alignItems: "flex-start",
+    // justifyContent: "flex-end",
+    maxWidth: "70%",
+    // maxHeight: "100%",
+  },
+  img3: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+  headerimg: {
+    maxWidth: "30%",
+  },
+  actdetail:{
+    position: 'absolute',
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: "100%",
+    background:
+    'linear-gradient(to top, #F00, transparent)',
+    height: "25%",
+    margin: "0, 0, 0, auto",
+    },
+acttitle:{
+    color: "white",
+},
+  details: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   // titleCardHeader{
   //   fontSize: 30,
@@ -137,7 +224,6 @@ const SportsAct = (props) => {
 
   // コメントの表示非表示の切り替え
   //   const [openComments, setOpenComments] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -149,7 +235,6 @@ const SportsAct = (props) => {
 
   //   コメント追加用
   const [act, setAct] = useState("");
-
   const [acttitle, setActtitle] = useState("");
   const [actImage, setActImage] = useState(null);
   const [actcomment, setActcomment] = useState("");
@@ -320,43 +405,39 @@ const SportsAct = (props) => {
 
   return (
     <>
-      <Grid item key={props} xs={12} sm={3} md={4}>
+      <Grid item key={props} xs={12} sm={2} md={3}>
         <Card className={classes.root}>
-          <CardHeader
-            className="cardHeader"
-            avatar={
+          <CardContent className={classes.root2}>
+            {/* <img className={classes.headerimg} alt="complex" src={props.image} variant="rounded"/> */}
+            <Box flexGrow={1}>
               <Avatar
                 src={props.image}
                 variant="rounded"
                 className={classes.avatar}
+                sizeLarge
               />
-            }
-            // action={
-            //   <IconButton aria-label="settings">
-            //     <MoreVertIcon />
-            //   </IconButton>
-            // }
-            title={props.sportsname}
-            // subheader={props.detail}
-          />
-          {/* <div>
-          {props.image && (
-            <CardMedia
-              className={classes.media}
-              image={props.image}
-              title={props.sportsname}
-            />
-          )}
-        </div> */}
+            </Box>
+            <Box className={classes.details} flexShrink={1}>
+              <Typography component="h5" variant="h5">
+                {props.sportsname}
+              </Typography>
+            </Box>
+          </CardContent>
 
           <CardActions textAlign="right" justify="center">
+            {/* <Box className={classes.root2} height="1"> */}
+            <Box width="50%" height="10%">
+              {/* <img className={classes.img} alt="complex" src={goldMedal} /> */}
+            </Box>
             <Button
               variant="outlined"
               color="primary"
               onClick={handleClickOpen}
+              flexShrink={0}
             >
               やったよ！登録
             </Button>
+            {/* </Box> */}
             <Dialog
               open={open}
               onClose={handleClose}
@@ -489,8 +570,20 @@ const SportsAct = (props) => {
           <CardContent className={classes.cardContent}>
             <div>
               {acts.map((act) => (
-                <div key={act.id}>
-                  <div>
+                <div
+                  key={act.id}
+                  className={classes.image5}
+                  // style={{ width: actImage.width }}
+                >
+                  {act.actImage && (
+                <Box className={classes.media}
+                  style={{ backgroundImage: `url(${act.actImage})`, backgroundSize: "cover", backgroundPosition: "center center"}}/>
+                  )}
+                  {!act.actImage && (
+                <Box className={classes.media}
+                style={{ backgroundImage: `url(${mainVisual })`, backgroundSize: "cover", backgroundPosition: "center center"}}/>
+                  )}
+                  {/* <div>
                     {act.actImage && (
                       <CardMedia
                         className={classes.media}
@@ -505,8 +598,21 @@ const SportsAct = (props) => {
                         title="イメージなし"
                       />
                     )}
-                  </div>
-                  <div>
+                  </div> */}
+                  <Box className={classes.imageButton}>
+                  {act.acttitle && (
+                      <img className={classes.img3} alt="complex" src={goldMedal} height="128" width="128"/>
+                  )}
+                      </Box>
+                  <Box className={classes.actdetail} fullwidth>
+                      <Typography className={classes.acttitle}> {act.acttitle}</Typography>
+                      <Typography className={classes.acttitle} > {act.actDate &&
+                        moment(new Date(act.actDate?.toDate())).format(
+                          "Do MMM"
+                        )}
+                        </Typography>
+                  </Box>
+                  {/* <div>
                     <Typography>{act.acttitle} </Typography>
                     <Typography>{act.actcomment}</Typography>
                     <Typography>{act.level}</Typography>
@@ -516,7 +622,7 @@ const SportsAct = (props) => {
                           "Do MMM"
                         )}
                     </Typography>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>
