@@ -22,6 +22,8 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 // import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import MySports from "./MySports";
+import Main from "./Main";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -57,8 +59,10 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(13),
     height: theme.spacing(13),
   },
+  apptitle: {
+    flexGrow: 1,
+  },
 }));
-
 
 const Mainpage = (props) => {
   const user = useSelector(selectUser);
@@ -120,7 +124,7 @@ const Mainpage = (props) => {
             <Typography
               variant="h6"
               color="inherit"
-              className={classes.title}
+              className={classes.apptitle}
               noWrap
             >
               Orelympic Personal Mainpage
@@ -135,14 +139,17 @@ const Mainpage = (props) => {
                   // onClick={handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle />
+                  <AccountCircle
+                    src={user.photoUrl}
+                    className={classes.avatar}
+                  />
                   {/* <Avatar 
                       src={user.photoUrl}
                       className={classes.avatar}
-                      sizeLarge/> */}
+                      /> */}
                   <Typography>{user.displayName}</Typography>
                 </IconButton>
-              
+
                 <Button
                   color="inherit"
                   id="menu-appbar"
@@ -164,121 +171,65 @@ const Mainpage = (props) => {
 
         <main>
           {/* Hero unit */}
+
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
               <Box display="flex" justifyContent="center" flexGrow="1">
-              <Avatar alt="Remy Sharp" src="" className={classes.large}/>
-              <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="textPrimary"
-                gutterBottom
-              >
-                {user.displayName}さん
-              </Typography>
+                <Avatar alt="Remy Sharp" src="" className={classes.large} />
+                <Typography
+                  component="h1"
+                  variant="h2"
+                  align="center"
+                  color="textPrimary"
+                  gutterBottom
+                >
+                  {user.displayName}さん
+                </Typography>
               </Box>
 
               <Grid>
-              <Typography
-                variant="h5"
-                align="center"
-                color="textSecondary"
-                paragraph
-              >
-                貴方は４８種目中○種目でメダル！
-                <br />
-                関数を入れたい。
-                <br />
-                意気込み！ 「個人詳細ページへのリンク」
-              </Typography>
-              <div className={classes.heroButtons}>
-                <Grid container spacing={2} justify="center">
-                  <Grid item>
-                    <Link to="/sportsexp">
-                      <Button variant="contained" color="primary">
-                        種目を探す・登録する
-                      </Button>
-                    </Link>
-                  </Grid>
-                  <Grid item>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  color="textSecondary"
+                  paragraph
+                >
+                  目標は全制覇！
+                  <br />
+                  さらなるメダルの獲得まであとすこし！
+                  <br />
+                  意気込み！
+                </Typography>
+                <div className={classes.heroButtons}>
+                  <Grid container spacing={2} justify="center">
+                    <Grid item>
+                      <Link to="/sportsexp">
+                        <Button variant="contained" color="primary">
+                          種目を探す・登録する
+                        </Button>
+                      </Link>
+                    </Grid>
+                    {/* <Grid item>
                     <Button variant="outlined" color="primary">
                       今までの記録を見る
                     </Button>
+                  </Grid> */}
+                    <Grid item>
+                      <Button variant="outlined" color="primary">
+                        ユーザー情報の登録
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Button variant="outlined" color="primary">
-                      ユーザー情報の登録
-                    </Button>
-                  </Grid>
-                </Grid>
-              </div>
+                </div>
               </Grid>
             </Container>
           </div>
+
+          <MySports />
           {/* ここから下は自分の写真と記録のアルバム */}
           {/* スポーツ一覧（メダルつき）エリアと、自分の投稿した写真エリア */}
-          <Container className={classes.cardGrid} maxWidth="md">
-            {/* End hero unit */}
-            <Grid container spacing={4}>
-              {sports.map((card2) => (
-                <Grid item key={card2.id} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      key={card2.id}
-                      className={classes.cardMedia}
-                      image={card2.image}
-                      title="Image title"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {card2.title}
-                      </Typography>
-                      <Typography>{card2.desc}</Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Edit・登録
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-            <br />
-            {/* 自分で投稿した写真一覧 ----------------------あとでdbの変更しますよ！*/}
-            <h1>You are the Orelympia!</h1> <br />
-            <Grid container spacing={4}>
-              {sports.map((card3) => (
-                <Grid item key={card3.id} xs={12} sm={6} md={4}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      key={card3.id}
-                      className={classes.cardMedia}
-                      image={card3.image}
-                      title="Image title"
-                    />
-                    <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {card3.title}
-                      </Typography>
-                      <Typography>{card3.desc}</Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        View
-                      </Button>
-                      <Button size="small" color="primary">
-                        Edit・登録
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+          <Container className={classes.cardGrid} maxWidth="lg">
+            <Main />
           </Container>
         </main>
 

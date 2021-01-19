@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { db, storage } from "./firebase";
-import firebase from "firebase/app";
+import { db } from "./firebase";
+// import firebase from "firebase/app";
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+// import DateFnsUtils from "@date-io/date-fns";
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardDatePicker,
+// } from "@material-ui/pickers";
 
-import { Avatar, Typography, Button, TextField, Box } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import { red } from "@material-ui/core/colors";
-import mainVisual from "./img/Mainvisual2.jpg";
+// import Card from "@material-ui/core/Card";
+// import Dialog from "@material-ui/core/Dialog";
+// import DialogActions from "@material-ui/core/DialogActions";
+// import DialogContent from "@material-ui/core/DialogContent";
+// import DialogContentText from "@material-ui/core/DialogContentText";
+// import DialogTitle from "@material-ui/core/DialogTitle";
+// import Radio from "@material-ui/core/Radio";
+// import RadioGroup from "@material-ui/core/RadioGroup";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import FormLabel from "@material-ui/core/FormLabel";
+// import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+// import CardActions from "@material-ui/core/CardActions";
+// import CardContent from "@material-ui/core/CardContent";
+// import IconButton from "@material-ui/core/IconButton";
+// import { red } from "@material-ui/core/colors";
+// import mainVisual from "./img/Mainvisual2.jpg";
 // import StarBorderIcon from "@material-ui/icons/StarBorder";
 import goldMedal from "./img/goldMedal.png";
-import { AccessTimeSharp, AcUnitRounded } from "@material-ui/icons";
+// import { AccessTimeSharp, AcUnitRounded } from "@material-ui/icons";
+import sports3 from "./img/sports3.jpg";
 
 var moment = require("moment");
 
@@ -102,12 +103,7 @@ const useStyles = makeStyles((theme) => ({
 const MySports = () => {
     const user = useSelector(selectUser);
     const classes = useStyles();
-    // var acts = db.collectionGroup('acts').where('uid', '==', user.uid);
-    // acts.get().then(function (querySnapshot) {
-    // querySnapshot.forEach(function (doc) {
-    //     console.log(doc.id, ' => ', doc.data());
-    // });
-    // });
+
     const [myActs, setMyActs] = useState([
         {
             // actのid
@@ -124,6 +120,15 @@ const MySports = () => {
             // sportsavatar:"",
         },
     ]);
+
+    // const [sports, setSports] = useState([
+    //     {
+    //       id: "",
+    //       image: "",
+    //       sportsname: "",
+    //       sportsimage: "",
+    //     },
+    //   ]);
 
     useEffect(() => {
         const unSub = db
@@ -148,6 +153,25 @@ const MySports = () => {
           unSub();
         };
       }, []);
+
+    //   useEffect(() => {
+    //     const unSub = db
+    //       .collection("sports")
+    //       .orderBy("timestamp", "desc")
+    //       .onSnapshot((snapshot) =>
+    //         setSports(
+    //           snapshot.docs.map((doc) => ({
+    //             id: doc.id,
+    //             image: doc.data().image,
+    //             sportsname: doc.data().sportsname,
+    //             detail: doc.data().detail,
+    //           }))
+    //         )
+    //       );
+    //     return () => {
+    //       unSub();
+    //     };
+    //   }, []);
     
 
 // console.log(myActs) 
@@ -161,11 +185,20 @@ const MySports = () => {
             <Grid key={myact.id} item>
               <Grid className={classes.paper}>
                 <div className={classes.stamp}>
+                {myact.actImage && (
                   <Box className={classes.media}
                           style={{
-                            backgroundImage: `url(${myact.sportsimage})`,
+                            backgroundImage: `url(${myact.actImage})`,
                           }}
                         />
+                )}
+                {!myact.actImage && (
+                    <Box className={classes.media}
+                        style={{
+                            backgroundImage: `url(${sports3})`,
+                            }}
+                    />
+                    )}
                   <Box className={classes.imageButton}>
                     <img
                             className={classes.img3}
@@ -189,4 +222,12 @@ const MySports = () => {
     );
 };
 
-export default MySports
+export default MySports;
+
+
+    // var acts = db.collectionGroup('acts').where('uid', '==', user.uid);
+    // acts.get().then(function (querySnapshot) {
+    // querySnapshot.forEach(function (doc) {
+    //     console.log(doc.id, ' => ', doc.data());
+    // });
+    // });
