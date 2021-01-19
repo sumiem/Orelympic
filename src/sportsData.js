@@ -1,13 +1,12 @@
-import ImgPath1 from "./img/volley.png";
 import ImgPath2 from "./img/volley.png";
-import ImgPath3 from "./img/volley.png";
+
 
 const sportsData = [
   {
     id: 1,
     title: "バレーボール",
     text: "みんなもよくしる",
-    img: ImgPath1
+    img: ImgPath2
   },
   {
     id: 2,
@@ -19,8 +18,26 @@ const sportsData = [
     id: 3,
     title: "ロンドン",
     text: "歴史ある建築とモダンな雰囲気が混ざり合っている",
-    img: ImgPath3
-  }
+    img: ImgPath2
+  },
+  {
+    id: 4,
+    title: "バレーボール",
+    text: "みんなもよくしる",
+    img: ImgPath2
+  },
+  {
+    id: 5,
+    title: "パリ",
+    text: "伝説のパリ、流行最先端のパリ、庶民的なパリ…",
+    img: ImgPath2
+  },
+  {
+    id: 6,
+    title: "ロンドン",
+    text: "歴史ある建築とモダンな雰囲気が混ざり合っている",
+    img: ImgPath2
+  },
   // {
   //   id: 4,
   //   text: "Mow lawn",

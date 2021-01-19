@@ -60,7 +60,7 @@ const Sportsfeed = () => {
     };
   }, []);
 
-  console.log(sports);
+  // console.log(sports);
 
   return (
     <div className="tweetwrap">

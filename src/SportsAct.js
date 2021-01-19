@@ -8,18 +8,12 @@ import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
 import { Avatar, Typography, Button, TextField, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-// import MessageIcon from "@material-ui/icons/Message";
-import SendIcon from "@material-ui/icons/Send";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import Modal from "@material-ui/core/Modal";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -28,37 +22,28 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import CameraIcon from "@material-ui/icons/Camera";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import GridList from "@material-ui/core/GridList";
 import IconButton from "@material-ui/core/IconButton";
 import { red } from "@material-ui/core/colors";
 import mainVisual from "./img/Mainvisual2.jpg";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+// import StarBorderIcon from "@material-ui/icons/StarBorder";
 import goldMedal from "./img/goldMedal.png";
-import ButtonBase from "@material-ui/core/ButtonBase";
-
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+// function getModalStyle() {
+//   const top = 50 + rand();
+//   const left = 50 + rand();
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`,
+//     transform: `translate(-${top}%, -${left}%)`,
+//   };
+// }
 var moment = require("moment");
 
 const useStyles = makeStyles((theme) => ({
@@ -108,113 +93,89 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: red[500],
   },
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
+  // paper: {
+  //   position: "absolute",
+  //   width: 400,
+  //   backgroundColor: theme.palette.background.paper,
+  //   border: "2px solid #000",
+  //   boxShadow: theme.shadows[5],
+  //   padding: theme.spacing(2, 4, 3),
+  // },
 
   cardContent: {
     flexGrow: 1,
     postision: "relative",
   },
-  title: {
-    color: theme.palette.primary.light,
-  },
-  titleBar: {
-    background:
-      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-  },
-  MuiCardHeaderTitle: {
-    fontSize: 30,
-      },
+  // title: {
+  //   color: theme.palette.primary.light,
+  // },
+  // titleBar: {
+  //   background:
+  //     "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  // },
+  // MuiCardHeaderTitle: {
+  //   fontSize: 30,
+  //     },
 
-  imageTitle: {
-    position: "relative",
-  },
+  // imageTitle: {
+  //   position: "relative",
+  // },
   imageButton: {
-    position: 'absolute',
+    position: "absolute",
     left: `$50%`,
     right: -15,
     top: -35,
     bottom: `$30%`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     color: theme.palette.common.white,
   },
 
-  image2: {
-    width: 128,
-    height: 128,
-  },
+  // image2: {
+  //   width: 128,
+  //   height: 128,
+  // },
   image5: {
-    position: 'relative',
+    position: "relative",
     height: 200,
   },
-  img: {
-    // margin: "auto",
-    // display: "block",
-    position: "relative",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: -100,
-    // display: "flex",
-    // alignItems: "flex-start",
-    // justifyContent: "flex-end",
-    maxWidth: "70%",
-    // maxHeight: "100%",
-  },
+  // img: {
+  //   position: "relative",
+  //   left: 0,
+  //   right: 0,
+  //   top: 0,
+  //   bottom: -100,
+  //   maxWidth: "70%",
+  // },
   img3: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    margin: "auto",
+    display: "block",
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
-  headerimg: {
-    maxWidth: "30%",
-  },
-  actdetail:{
-    position: 'absolute',
+  // headerimg: {
+  //   maxWidth: "30%",
+  // },
+  actdetail: {
+    position: "absolute",
     bottom: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
-    background:
-    'linear-gradient(to top, #F00, transparent)',
+    background: "linear-gradient(to top, #F00, transparent)",
     height: "25%",
     margin: "0, 0, 0, auto",
-    },
-acttitle:{
+  },
+  acttitle: {
     color: "white",
-},
+  },
   details: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  // titleCardHeader{
-  //   fontSize: 30,
-  // },
-
-  // },
-  // title: {
-  //   margin: auto,
-  // },
-  // modal: {
-  //   outline: "none",
-  //   position: "absolute",
-  //   width: 400,
-  //   borderRadius: 10,
-  //   backgroundColor: "white",
-  //   boxShadow: theme.shadows[5],
-  //   padding: theme.spacing(10),
-  // },
 }));
 
 // SportsExpからスポーツの情報(sports)がpropsに入ってる場合
@@ -224,7 +185,6 @@ const SportsAct = (props) => {
 
   // コメントの表示非表示の切り替え
   //   const [openComments, setOpenComments] = useState(false);
-  const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -317,7 +277,8 @@ const SportsAct = (props) => {
       unSub();
     };
     // 投稿のIDが変わった場合は対象の投稿のコメントを入れる。
-  }, [props.sportsId]);
+  });
+// }, [props.sportsId]);
 
   // console.log(acts);
 
@@ -405,13 +366,13 @@ const SportsAct = (props) => {
 
   return (
     <>
-      <Grid item key={props} xs={12} sm={2} md={3}>
+      <Grid item key={props} xs={12} sm={5} md={4}>
         <Card className={classes.root}>
           <CardContent className={classes.root2}>
             {/* <img className={classes.headerimg} alt="complex" src={props.image} variant="rounded"/> */}
             <Box flexGrow={1}>
               <Avatar
-                src={props.image}
+                src={user.userimage}
                 variant="rounded"
                 className={classes.avatar}
                 sizeLarge
@@ -426,7 +387,7 @@ const SportsAct = (props) => {
 
           <CardActions textAlign="right" justify="center">
             {/* <Box className={classes.root2} height="1"> */}
-            <Box width="50%" height="10%">
+            <Box width="30%" height="10%">
               {/* <img className={classes.img} alt="complex" src={goldMedal} /> */}
             </Box>
             <Button
@@ -435,7 +396,7 @@ const SportsAct = (props) => {
               onClick={handleClickOpen}
               flexShrink={0}
             >
-              やったよ！登録
+              やったよ！
             </Button>
             {/* </Box> */}
             <Dialog
@@ -576,12 +537,24 @@ const SportsAct = (props) => {
                   // style={{ width: actImage.width }}
                 >
                   {act.actImage && (
-                <Box className={classes.media}
-                  style={{ backgroundImage: `url(${act.actImage})`, backgroundSize: "cover", backgroundPosition: "center center"}}/>
+                    <Box
+                      className={classes.media}
+                      style={{
+                        backgroundImage: `url(${act.actImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center center",
+                      }}
+                    />
                   )}
                   {!act.actImage && (
-                <Box className={classes.media}
-                style={{ backgroundImage: `url(${mainVisual })`, backgroundSize: "cover", backgroundPosition: "center center"}}/>
+                    <Box
+                      className={classes.media}
+                      style={{
+                        backgroundImage: `url(${mainVisual})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center center",
+                      }}
+                    />
                   )}
                   {/* <div>
                     {act.actImage && (
@@ -600,17 +573,28 @@ const SportsAct = (props) => {
                     )}
                   </div> */}
                   <Box className={classes.imageButton}>
-                  {act.acttitle && (
-                      <img className={classes.img3} alt="complex" src={goldMedal} height="128" width="128"/>
-                  )}
-                      </Box>
+                    {act.acttitle && (
+                      <img
+                        className={classes.img3}
+                        alt="complex"
+                        src={goldMedal}
+                        height="128"
+                        width="128"
+                      />
+                    )}
+                  </Box>
                   <Box className={classes.actdetail} fullwidth>
-                      <Typography className={classes.acttitle}> {act.acttitle}</Typography>
-                      <Typography className={classes.acttitle} > {act.actDate &&
+                    <Typography className={classes.acttitle}>
+                      {" "}
+                      {act.acttitle}
+                    </Typography>
+                    <Typography className={classes.acttitle}>
+                      {" "}
+                      {act.actDate &&
                         moment(new Date(act.actDate?.toDate())).format(
                           "Do MMM"
                         )}
-                        </Typography>
+                    </Typography>
                   </Box>
                   {/* <div>
                     <Typography>{act.acttitle} </Typography>
@@ -636,10 +620,6 @@ const SportsAct = (props) => {
 export default SportsAct;
 
 // メダル　<a href='https://ja.pngtree.com/so/メダルクリップ'>メダルクリップ pngから ja.pngtree.com</a>
-{
-  /* <a href='https://ja.pngtree.com/so/メダルクリップ'>メダルクリップ pngから ja.pngtree.com</a> */
-}
-
 // User情報取得
 // const [user, setUser] = useState(null);
 // useEffect(() => {
@@ -664,16 +644,6 @@ export default SportsAct;
 //   date: date,
 //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
-{
-  /* {acts.map((act) => ( */
-}
-{
-  /* // <div key={act.id}> */
-}
-{
-  /* <Avatar src={act.avatar} /> */
-}
-{
   /* <GridListTile key={act.img} imgFullWidth>
                   {act.actImage && (
                     <img src={act.actImage} alt={act.acttitle} className={classes.media}/>
@@ -685,4 +655,3 @@ export default SportsAct;
                           title: classes.title,
                         }}/>                  
                   </GridListTile> */
-}

@@ -1,6 +1,4 @@
-import ImgPath1 from "./img/volley.png";
-import ImgPath2 from "./img/volley.png";
-import ImgPath3 from "./img/volley.png";
+import ImgPath1 from "./img/sports2.jpg";
 
 const newsData = [
   {
@@ -13,13 +11,13 @@ const newsData = [
     id: 2,
     title: "パリ",
     text: "伝説のパリ、流行最先端のパリ、庶民的なパリ…",
-    img: ImgPath2,
+    img: ImgPath1,
   },
   {
     id: 3,
     title: "ロンドン",
     text: "歴史ある建築とモダンな雰囲気が混ざり合っている",
-    img: ImgPath3,
+    img: ImgPath1,
   },
   // {
   //   id: 4,

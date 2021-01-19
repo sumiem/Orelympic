@@ -81,7 +81,7 @@ const SportsInput = () => {
   // 記述7.送信処理を記述
   const sendSports = (e) => {
     // 状態を確認する
-    console.log(title, desc, inputImage, sports_id);
+    // console.log(title, desc, inputImage, sports_id);
     e.preventDefault();
     if (inputImage) {
       // 画像 + テキストの処理

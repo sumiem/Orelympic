@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
-import { withRouter, Link, Router } from "react-router-dom";
-
+import { withRouter, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
 // Style用
+import { Avatar, Typography, TextField, Box } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 // import CameraIcon from "@material-ui/icons/PhotoCamera";
@@ -13,7 +15,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
@@ -51,17 +53,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  large: {
+    width: theme.spacing(13),
+    height: theme.spacing(13),
+  },
 }));
 
 
 const Mainpage = (props) => {
+  const user = useSelector(selectUser);
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
       !user && props.history.push("login");
     });
     return () => unSub();
   });
-
+  // const user = useSelector(selectUser);
   const [sports, setSports] = useState([
     {
       id: " 1",
@@ -129,7 +136,13 @@ const Mainpage = (props) => {
                   color="inherit"
                 >
                   <AccountCircle />
+                  {/* <Avatar 
+                      src={user.photoUrl}
+                      className={classes.avatar}
+                      sizeLarge/> */}
+                  <Typography>{user.displayName}</Typography>
                 </IconButton>
+              
                 <Button
                   color="inherit"
                   id="menu-appbar"
@@ -153,6 +166,8 @@ const Mainpage = (props) => {
           {/* Hero unit */}
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
+              <Box display="flex" justifyContent="center" flexGrow="1">
+              <Avatar alt="Remy Sharp" src="" className={classes.large}/>
               <Typography
                 component="h1"
                 variant="h2"
@@ -160,8 +175,11 @@ const Mainpage = (props) => {
                 color="textPrimary"
                 gutterBottom
               >
-                写　ニックネーム
+                {user.displayName}さん
               </Typography>
+              </Box>
+
+              <Grid>
               <Typography
                 variant="h5"
                 align="center"
@@ -188,8 +206,14 @@ const Mainpage = (props) => {
                       今までの記録を見る
                     </Button>
                   </Grid>
+                  <Grid item>
+                    <Button variant="outlined" color="primary">
+                      ユーザー情報の登録
+                    </Button>
+                  </Grid>
                 </Grid>
               </div>
+              </Grid>
             </Container>
           </div>
           {/* ここから下は自分の写真と記録のアルバム */}
@@ -197,20 +221,20 @@ const Mainpage = (props) => {
           <Container className={classes.cardGrid} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
-              {sports.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {sports.map((card2) => (
+                <Grid item key={card2.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
-                      key={card.id}
+                      key={card2.id}
                       className={classes.cardMedia}
-                      image={card.image}
+                      image={card2.image}
                       title="Image title"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {card.title}
+                        {card2.title}
                       </Typography>
-                      <Typography>{card.desc}</Typography>
+                      <Typography>{card2.desc}</Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small" color="primary">
@@ -228,20 +252,20 @@ const Mainpage = (props) => {
             {/* 自分で投稿した写真一覧 ----------------------あとでdbの変更しますよ！*/}
             <h1>You are the Orelympia!</h1> <br />
             <Grid container spacing={4}>
-              {sports.map((card2) => (
-                <Grid item key={card2} xs={12} sm={6} md={4}>
+              {sports.map((card3) => (
+                <Grid item key={card3.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
-                      key={card2.id}
+                      key={card3.id}
                       className={classes.cardMedia}
-                      image={card2.image}
+                      image={card3.image}
                       title="Image title"
                     />
                     <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
-                        {card2.title}
+                        {card3.title}
                       </Typography>
-                      <Typography>{card2.desc}</Typography>
+                      <Typography>{card3.desc}</Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small" color="primary">
@@ -277,5 +301,7 @@ const Mainpage = (props) => {
     </>
   );
 };
+
+// export default Mainpage;
 
 export default withRouter(Mainpage);

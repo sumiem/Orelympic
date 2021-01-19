@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
@@ -8,12 +9,13 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-
+// import Button from "@material-ui/core/Button";
 // コンテンツ
 import Header from "./Header";
 import TopMain from "./TopMain";
 import Main from "./Main";
 import Sidebar from "./Sidebar";
+import mainvisual1 from "./img/mainvisual1.jpg";
 // import Footer from './Footer';
 // import post1 from './blog-post.1.md';
 // import post2 from './blog-post.2.md';
@@ -56,43 +58,22 @@ const sections = [
 
 //   メイン画像
 const topMain = {
+  id: 2,
   title: "俺たちのスポーツまつり　Orelympic",
   description:
-    "オレリンピックとはXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  image: "https://source.unsplash.com/random",
+    "オレリンピックとは、種目を通じてスポーツを最高に楽しむ、自分のためのオリンピックです。",
+  image: {mainvisual1},
   imgText: "main image description",
-  linkText: "Continue reading…",
+  linkText: "Continue reading…(coming soon)",
 };
 
-// カード
-// const featuredPosts = [
-//     {
-//       title: 'Featured post',
-//       date: 'Nov 12',
-//       description:
-//         'This is a wider card with supporting text below as a natural lead-in to additional content.',
-//       image: 'https://source.unsplash.com/random',
-//       imageText: 'Image Text',
-//     },
-//     {
-//       title: 'Post title',
-//       date: 'Nov 11',
-//       description:
-//         'This is a wider card with supporting text below as a natural lead-in to additional content.',
-//       image: 'https://source.unsplash.com/random',
-//       imageText: 'Image Text',
-//     },
-//   ];
-
-// ポストの配列
-// const posts = [post1, post2, post3];
-
 const sidebar = {
+  id: 1,
   title: "Login",
-  description: "今すぐ始める！　ログインページへ",
+  description: "今すぐ始める！?ログインページへ",
   social: [
-    { name: "Twitter", icon: TwitterIcon },
-    { name: "Facebook", icon: FacebookIcon },
+    { id: 1, name: "Twitter", icon: TwitterIcon },
+    { id: 2, name: "Facebook", icon: FacebookIcon },
   ],
 };
 
@@ -127,6 +108,7 @@ const Home = () => {
             <Grid item xs={12} sm={4}>
               <Paper className={classes.paper}>
                 <Sidebar
+                  key={sidebar.id}
                   title={sidebar.title}
                   description={sidebar.description}
                   social={sidebar.social}
@@ -140,4 +122,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withRouter (Home);

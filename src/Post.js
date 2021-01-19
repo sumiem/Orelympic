@@ -11,6 +11,10 @@ const Post = ({id, name, text, image, timestamp}) => {
         db.collection("posts").doc(id).delete();
         console.log('削除が実行されました！', id);
     };
+
+
+
+
     return (
         <div className="postdata">
         {/*v記述１。テキスト情報が渡ってくる */}

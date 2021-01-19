@@ -78,7 +78,7 @@ const TweetInput = () => {
   // 記述7.送信処理を記述
   const sendTweet = (e) => {
     // 状態を確認する
-    console.log(message, name, inputImage);
+    // console.log(message, name, inputImage);
     e.preventDefault();
     if (inputImage) {
       // 画像 + テキストの処理
@@ -169,7 +169,7 @@ const TweetInput = () => {
         <IconButton>
           <label>
             <AddAPhotoIcon />
-            <input type="file" onChange={onChangeImageHandler} />
+            <input type="file" onChange={onChangeImageHandler} className="addPhoto"/>
           </label>
         </IconButton>
         <Button type="submit" disabled={!message} Button variant="contained" color="primary">

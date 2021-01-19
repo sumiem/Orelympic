@@ -10,6 +10,7 @@ import Mainpage from "./Mainpage";
 import Login from "./Login";
 import SportsExp from "./SportsExp";
 import Home from "./Home";
+import SportsForm from "./SportsForm";
 
 import Main from "./Main";
 import Mydetail from "./Mydetail";
@@ -19,6 +20,7 @@ import SportsAct from "./SportsAct";
 import UserInfo from "./UserInfo"
 import UserInfoTEST from "./UserInfoTEST"
 import Test from "./Test"
+import MySports from "./MySports";
 
 
 const App = (props) => {
@@ -70,6 +72,10 @@ const App = (props) => {
 
       <Route exact path="/home" component={Home} />
       <Route exact path="/sportsexp" component={SportsExp} />
+      <Route exact path="/sportsform" component={SportsForm} />
+      <Route exact path="/sportslist" component={SportsList} />
+      <Route exact path="/sportsresister" component={SportsResister} />
+      <Route exact path="/mysports" component={MySports} />
       </Switch>
     </Router>
     {/* <div>

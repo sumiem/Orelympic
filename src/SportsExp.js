@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
       flexGrow: 1,
     },
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
+    },
     footer: {
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(6),
@@ -59,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SportsExp = () => {
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
     const classes = useStyles();
     const [sports, setSports] = useState([
         {
@@ -125,7 +129,7 @@ const SportsExp = () => {
         {/* sportsがあって、idがある場合 */}
         {sports[0]?.id && (
           <>
-          <Container className={classes.cardGrid} maxWidth="lg">
+          <Container className={classes.cardGrid} maxWidth="md">
           {/* <Grid container spacing={2}> */}
             <Gridlist container spacing={4}>
             {sports.map((sport) => (

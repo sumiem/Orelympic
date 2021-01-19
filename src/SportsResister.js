@@ -107,14 +107,14 @@ const SportsResister = () => {
     };
   }, []);
 
-  console.log(sports);
+  // console.log(sports);
 
 
   // 記述7.送信処理を記述
   const sendSports = (e) => {
 
     // 状態を確認する
-    console.log(detail, sportsname, inputImage, sportsid);
+    // console.log(detail, sportsname, inputImage, sportsid);
     e.preventDefault();
     if (inputImage) {
       // 画像 + テキストの処理
@@ -171,6 +171,8 @@ const SportsResister = () => {
     setSportsname("");
     setSportsid("");
   };
+
+  
   return (
     <>
     {/* 登録フォーム */}
