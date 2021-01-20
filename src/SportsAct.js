@@ -110,20 +110,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     postision: "relative",
   },
-  // title: {
-  //   color: theme.palette.primary.light,
-  // },
-  // titleBar: {
-  //   background:
-  //     "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
-  // },
-  // MuiCardHeaderTitle: {
-  //   fontSize: 30,
-  //     },
-
-  // imageTitle: {
-  //   position: "relative",
-  // },
   imageButton: {
     position: "absolute",
     left: `$50%`,
@@ -135,32 +121,18 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     color: theme.palette.common.white,
   },
-
-  // image2: {
-  //   width: 128,
-  //   height: 128,
-  // },
   image5: {
     position: "relative",
     height: 200,
   },
-  // img: {
-  //   position: "relative",
-  //   left: 0,
-  //   right: 0,
-  //   top: 0,
-  //   bottom: -100,
-  //   maxWidth: "70%",
-  // },
+
   img3: {
     margin: "auto",
     display: "block",
     maxWidth: "100%",
     maxHeight: "100%",
   },
-  // headerimg: {
-  //   maxWidth: "30%",
-  // },
+
   actdetail: {
     position: "absolute",
     bottom: 0,

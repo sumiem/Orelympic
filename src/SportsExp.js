@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 import { makeStyles } from "@material-ui/core/styles";
-import { withRouter, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser, login, logout } from "./features/userSlice";
+import { withRouter } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { selectUser } from "./features/userSlice";
 
 import SportsAct from "./SportsAct";
 import NavBar from "./NavBar";
@@ -17,51 +17,25 @@ import Gridlist from "@material-ui/core/GridList";
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-    flexGrow: 1,
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
+  // root: {
+  //   maxWidth: 345,
+  //   flexGrow: 1,
+  // },
+  // icon: {
+  //   marginRight: theme.spacing(2),
+  // },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
+  // footer: {
+  //   backgroundColor: theme.palette.background.paper,
+  //   padding: theme.spacing(6),
+  // },
 }));
 
 const SportsExp = (props) => {
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
       !user && props.history.push("login");
@@ -110,29 +84,7 @@ const SportsExp = (props) => {
     <>
       <CssBaseline />
       <NavBar />
-      {/* <div>
-            <Typography>スポーツ一覧</Typography></div>
-            {/* ログアウトの書き方あとでちぇっくして */}
-      {/* <Button
-                  color="primary"
-                  id="menu-appbar"
-                  onClick={async () => {
-                    try {
-                      await auth.signOut();
-                      props.history.push("login");
-                    } catch (error) {
-                      alert(error.message);
-                    }
-                    // await auth.signOut();
-                  }}
-                >
-                  Logout
-                </Button> */}
-      {/* <div>{props.sportsname}</div> */}
-      {/* <div>{props.timestamp}</div> */}
-
       <div>
-        {/* sportsがあって、idがある場合 */}
         {sports[0]?.id && (
           <>
             <Container className={classes.cardGrid} maxWidth="md">
@@ -174,44 +126,3 @@ export default withRouter(SportsExp);
 //       return () => unSub();
 //     },);
 // 例 UID: {user && user.uid}
-
-{
-  /* <Container className={classes.cardGrid} maxWidth="md">
-<Grid container spacing={4}>
-    {sports.map((sport) => (
-        <Grid item key={sport} xs={12} sm={6} md={4}>
-        <Card className={classes.root}>
-            <CardActionArea> 
-            <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image= {sport.image}
-            //   image= {sport.image ? ("{sport.image}") 
-            //   : ( "画像なし" )}
-            title="Contemplative Reptile"
-            />
-            <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-                {sport.sportsname}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-                {sports.detail}
-            </Typography>
-            </CardContent>
-            </CardActionArea>
-            <CardActions>
-            <Button size="small" color="primary">
-            View
-            </Button>
-            <Button size="small" color="primary">
-            スポーツ登録リンク
-            </Button>
-        </CardActions>
-        </Card>
-        </Grid>
-        ))}
-
-</Grid>
-</Container> */
-}

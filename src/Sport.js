@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React from "react";
 import "./style.css";
 import { db } from "./firebase";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -8,70 +7,67 @@ import ClearIcon from "@material-ui/icons/Clear";
 // データが上から渡ってきますよ　=props データを指定するのが下
 // const Post = (props) => {
 const Sport = (sportsid, sportsname, image, detail, timestamp, id) => {
-    const DeleteInputData = () => {
-        db.collection("sports").doc(id).delete();
-        console.log('削除が実行されました！', id);
-    };
+  const DeleteInputData = () => {
+    db.collection("sports").doc(id).delete();
+    console.log("削除が実行されました！", id);
+  };
 
-    return (
-        <div className="postdata">
-        {/*v記述１。テキスト情報が渡ってくる */}
-        {/* <div>{props.text}</div>のpropsはいらない */}
-        <div >{sportsid}</div>
-        <div >{sportsname}</div>
-        <div >{detail}</div>
+  return (
+    <div className="postdata">
+      {/*v記述１。テキスト情報が渡ってくる */}
+      {/* <div>{props.text}</div>のpropsはいらない */}
+      <div>{sportsid}</div>
+      <div>{sportsname}</div>
+      <div>{detail}</div>
 
-            {/*記述２　画像を表示　imgタグ */}
-            {/* 記述4　画像があるときだけ表示　props image && */}
+      {/*記述２　画像を表示　imgタグ */}
+      {/* 記述4　画像があるときだけ表示　props image && */}
 
-    {image ? (
+      {image ? (
         <div>
           <img src={image} alt="" width="180px" height="auto" />
         </div>
       ) : (
         <h1>画像なし</h1>
       )}
-    {/*記述３.日付を表示 */}
-        <div>{new Date(timestamp?.toDate()).toLocaleString()}</div>
-    {/* 削除の実行 */}
-        {/* <button onClick={() => DeleteInputData(id)}>削除</button> */}
-        {/* <button onClick={DeleteInputData}> */}
-        <button onClick={() => DeleteInputData(id)}>
+      {/*記述３.日付を表示 */}
+      <div>{new Date(timestamp?.toDate()).toLocaleString()}</div>
+      {/* 削除の実行 */}
+      {/* <button onClick={() => DeleteInputData(id)}>削除</button> */}
+      {/* <button onClick={DeleteInputData}> */}
+      <button onClick={() => DeleteInputData(id)}>
         <ClearIcon />
-        </button>
-    
-    {/* 以下イメージの表示方法参考 */}
-    {/* {image &&(
+      </button>
+
+      {/* 以下イメージの表示方法参考 */}
+      {/* {image &&(
         <div>
         <img src={image} alt="" width="150px" />
         </div>
     )} */}
-{/*  ないときに別のものを表示 ?の次はtrueしかない　:のあとはNO（：はでなければ */}
-    {/* {image ? (
+      {/*  ないときに別のものを表示 ?の次はtrueしかない　:のあとはNO（：はでなければ */}
+      {/* {image ? (
         <div>
           <img src={image} alt="" />
         </div>
       ) : (
         <h1>画像がない時にはh1が表示される</h1>
       )} */}
-{/* 
+      {/* 
             <div>
                 <img src={image} alt=""/>
             </div> */}
 
-         {/* 削除の実行 */}
-         {/* <button onClick={DeleteInputData}>
+      {/* 削除の実行 */}
+      {/* <button onClick={DeleteInputData}>
         <ClearIcon />
       </button> */}
-
-
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Sport;
 
-
 // json のデータをJSからは文字列で、文字列のデータをJSのデータの塊に
-// 以下に安全なデータなのか 
-// 
+// 以下に安全なデータなのか
+//

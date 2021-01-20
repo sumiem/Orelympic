@@ -18,16 +18,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "lg",
     flexGrow: 1,
   },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
+  // icon: {
+  //   marginRight: theme.spacing(2),
+  // },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),

@@ -18,11 +18,11 @@ import SportsExp from "./SportsExp";
 import Home from "./Home";
 import SportsForm from "./SportsForm";
 
-import Main from "./Main";
+// import Main from "./Main";
 import SportsResister from "./SportsResister";
 import SportsList from "./SportsList";
-import SportsAct from "./SportsAct";
-import UserInfo from "./UserInfo";
+// import SportsAct from "./SportsAct";
+// import UserInfo from "./UserInfo";
 // import UserInfoTEST from "./UserInfoTEST"
 // import Test from "./Test"
 import MySports from "./MySports";
@@ -52,7 +52,7 @@ const App = () => {
   // 素の文章
   //       !authUser && props.history.push("login");
   // ログインしてる場合の表示（マイページ）
-  // render() {
+ 
       return (
         <>
           <BrowserRouter>
@@ -60,8 +60,9 @@ const App = () => {
             <Switch>
               {user.uid ? (
                 <Route exact path="/" component={Mainpage} />
-              ) : (<Route exact path="/login" component={Login} />)};
+              ) : (<Route exact path="/" component={Home} />)};
 
+              <Route exact path="/login" component={Login} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/sportsexp" component={SportsExp} />
               <Route exact path="/sportsform" component={SportsForm} />

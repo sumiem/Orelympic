@@ -34,7 +34,7 @@ import goldMedal from "./img/goldMedal.png";
 // import { AccessTimeSharp, AcUnitRounded } from "@material-ui/icons";
 import sports3 from "./img/sports3.jpg";
 
-var moment = require("moment");
+// var moment = require("moment");
 
 const useStyles = makeStyles((theme) => ({
     paper: {

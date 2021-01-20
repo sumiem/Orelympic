@@ -2,56 +2,56 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+// import Card from '@material-ui/core/Card';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+// import Container from '@material-ui/core/Container';
+// import Grid from '@material-ui/core/Grid';
 import UpdateSports from "./UpdateSports";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      maxWidth: 345,
-      flexGrow: 1,
-    },
-    icon: {
-        marginRight: theme.spacing(2),
-      },
-      heroContent: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(8, 0, 6),
-      },
-      heroButtons: {
-        marginTop: theme.spacing(4),
-      },
-      cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
-      },
-      card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-      },
-      cardMedia: {
-        paddingTop: '56.25%', // 16:9
-      },
-      cardContent: {
-        flexGrow: 1,
-      },
-      footer: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(6),
-      },
-  }));
+// const useStyles = makeStyles((theme) => ({
+//     root: {
+//       maxWidth: 345,
+//       flexGrow: 1,
+//     },
+//     icon: {
+//         marginRight: theme.spacing(2),
+//       },
+//       heroContent: {
+//         backgroundColor: theme.palette.background.paper,
+//         padding: theme.spacing(8, 0, 6),
+//       },
+//       heroButtons: {
+//         marginTop: theme.spacing(4),
+//       },
+//       cardGrid: {
+//         paddingTop: theme.spacing(8),
+//         paddingBottom: theme.spacing(8),
+//       },
+//       card: {
+//         height: '100%',
+//         display: 'flex',
+//         flexDirection: 'column',
+//       },
+//       cardMedia: {
+//         paddingTop: '56.25%', // 16:9
+//       },
+//       cardContent: {
+//         flexGrow: 1,
+//       },
+//       footer: {
+//         backgroundColor: theme.palette.background.paper,
+//         padding: theme.spacing(6),
+//       },
+//   }));
 
 
 const SportsForm = () => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const [sports, setSports] = useState([
         {
             id: "",

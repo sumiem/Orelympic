@@ -1,67 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { storage, db } from "./firebase";
+import { Redirect, withRouter } from "react-router-dom";
 import firebase from "firebase/app";
-import { Button, IconButton, Grid, Card } from "@material-ui/core";
+import { Button, IconButton, Grid } from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 // import "./style.css";
-import Sport from "./Sport";
+// import Sport from "./Sport";
 
-import AppBar from "@material-ui/core/AppBar";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  toroku: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-  root: {
-    width: '100%',
-    maxWidth: '36ch',
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: 'inline',
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   icon: {
+//     marginRight: theme.spacing(2),
+//   },
+//   toroku: {
+//     backgroundColor: theme.palette.background.paper,
+//     padding: theme.spacing(8, 0, 6),
+//   },
+//   heroButtons: {
+//     marginTop: theme.spacing(4),
+//   },
+//   cardGrid: {
+//     paddingTop: theme.spacing(8),
+//     paddingBottom: theme.spacing(8),
+//   },
+//   card: {
+//     height: "100%",
+//     display: "flex",
+//     flexDirection: "column",
+//   },
+//   cardMedia: {
+//     paddingTop: "56.25%", // 16:9
+//   },
+//   cardContent: {
+//     flexGrow: 1,
+//   },
+//   footer: {
+//     backgroundColor: theme.palette.background.paper,
+//     padding: theme.spacing(6),
+//   },
+//   root: {
+//     width: '100%',
+//     maxWidth: '36ch',
+//     backgroundColor: theme.palette.background.paper,
+//   },
+//   inline: {
+//     display: 'inline',
+//   },
+// }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const SportsResister = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
+  firebase.auth().onAuthStateChanged(function(user) {
+    if(!user){return <Redirect to="/home" />}});
+  // });
+  // const unSub = auth.onAuthStateChanged((user) => {
+  //   if(!user){return <Redirect to="/home" />}});
+
   // 記述3. useStateを用意します　画像を保持する箱、入力された文字列を保持する箱
   const [inputImage, setInputImage] = useState(null);
   const [sportsname, setSportsname] = useState("");
@@ -78,10 +78,7 @@ const SportsResister = () => {
   const [sports, setSports] = useState([
     {
       id: "",
-      sportsid: "",
       sportsname:"",
-      image: "",
-      detail: "",
       timestamp: null,
     },
   ]);
@@ -94,11 +91,11 @@ const SportsResister = () => {
       .onSnapshot((snapshot) =>
         setSports(
           snapshot.docs.map((doc) => ({
-            id: doc.id,
-            name: doc.data().name,
-            image: doc.data().image,
-            text: doc.data().text,
-            timestamp: doc.data().timestamp,
+            // id: doc.id,
+            sportsname: doc.data().sportsname,
+            // image: doc.data().image,
+            // text: doc.data().text,
+            // timestamp: doc.data().timestamp,
           }))
         )
       );
@@ -245,6 +242,9 @@ const SportsResister = () => {
               </form>
             </Grid>
             <Grid item>
+            {sports.map((sport) => (
+
+              <div> {sport.sportsname}</div>))}
               {/* <Button variant="outlined" color="primary">
                     まとめて編集Secondary action
                   </Button> */}
@@ -257,4 +257,4 @@ const SportsResister = () => {
     </>
   );
 };
-export default SportsResister;
+export default withRouter(SportsResister);

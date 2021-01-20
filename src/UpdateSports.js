@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { storage, db } from "./firebase";
 import firebase from "firebase/app";
-import { Button, IconButton, Grid, Card } from "@material-ui/core";
+import { Button, IconButton, Grid } from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -15,36 +15,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6),
   },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-  },
-  cardMedia: {
-    paddingTop: "56.25%", // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-  root: {
-    width: "100%",
-    maxWidth: "36ch",
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: "inline",
-  },
+
+  // cardGrid: {
+  //   paddingTop: theme.spacing(8),
+  //   paddingBottom: theme.spacing(8),
+  // },
+  // card: {
+  //   height: "100%",
+  //   display: "flex",
+  //   flexDirection: "column",
+  // },
+  // cardMedia: {
+  //   paddingTop: "56.25%", // 16:9
+  // },
+  // cardContent: {
+  //   flexGrow: 1,
+  // },
+
   addaphoto: {
     display: "none",
   },
