@@ -6,19 +6,19 @@ import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import store from "./app/store";
 
-import Login from "./Login";
-import Home from "./Home";
+// import Login from "./Login";
+// import Home from "./Home";
 
-import Main from "./Main";
-import Mainpage from "./Mainpage";
-import Mydetail from "./Mydetail";
-import SportsResister from "./SportsResister";
-import SportsList from "./SportsList";
-import SportsExp from "./SportsExp";
-import SportsAct from "./SportsAct";
-import UserInfo from "./UserInfo"
-import UserInfoTEST from "./UserInfoTEST"
-import Test from "./Test"
+// import Main from "./Main";
+// import Mainpage from "./Mainpage";
+// import Mydetail from "./Mydetail";
+// import SportsResister from "./SportsResister";
+// import SportsList from "./SportsList";
+// import SportsExp from "./SportsExp";
+// import SportsAct from "./SportsAct";
+// import UserInfo from "./UserInfo"
+// import UserInfoTEST from "./UserInfoTEST"
+// import Test from "./Test"
 
 function renderApp() {
 ReactDOM.render(

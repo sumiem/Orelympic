@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SportsExp = () => {
+const SportsExp = (props) => {
   const user = useSelector(selectUser);
   // const dispatch = useDispatch();
     const classes = useStyles();
@@ -107,21 +107,24 @@ const SportsExp = () => {
         <>
         <CssBaseline />
         <NavBar />
-        <div>
+        {/* <div>
             <Typography>スポーツ一覧</Typography></div>
             {/* ログアウトの書き方あとでちぇっくして */}
-            <Button
-                  color="inherit"
+            {/* <Button
+                  color="primary"
                   id="menu-appbar"
                   onClick={async () => {
-                    await auth.signOut();
+                    try {
+                      await auth.signOut();
+                      props.history.push("login");
+                    } catch (error) {
+                      alert(error.message);
+                    }
+                    // await auth.signOut();
                   }}
                 >
                   Logout
-                </Button>
-        <button>
-          logout
-        </button>
+                </Button> */}
         {/* <div>{props.sportsname}</div> */}
         {/* <div>{props.timestamp}</div> */}
 

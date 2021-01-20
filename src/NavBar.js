@@ -1,5 +1,6 @@
 import React from "react";
 import { auth } from "./firebase";
+import { withRouter, Redirect, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -60,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  apptitle: {
+    flexGrow: 1,
+  },
 }));
 
 // const sidebar = {
@@ -71,8 +75,9 @@ const useStyles = makeStyles((theme) => ({
 //   ],
 // };
 
-const NavBar = () => {
+const NavBar = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <>
       <CssBaseline />
@@ -90,7 +95,7 @@ const NavBar = () => {
           <Typography
             variant="h6"
             color="inherit"
-            className={classes.title}
+            className={classes.apptitle}
             noWrap
           >
             Orelympic Personal Mainpage
@@ -111,7 +116,14 @@ const NavBar = () => {
                 color="inherit"
                 id="menu-appbar"
                 onClick={async () => {
-                  await auth.signOut();
+                  try {
+                    await auth.signOut();
+                    history.push("login");
+                    // return <Redirect to="/" />;
+                  } catch (error) {
+                    alert(error.message);
+                  }
+                  // await auth.signOut();
                 }}
               >
                 Logout
@@ -124,4 +136,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default withRouter(NavBar);

@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
+
   root: {
     height: "100%",
     display: "flex",
@@ -91,7 +92,10 @@ const useStyles = makeStyles((theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500],
+    // backgroundColor: red[500],
+    // borderColor: red[500],
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   },
   // paper: {
   //   position: "absolute",
@@ -278,7 +282,7 @@ const SportsAct = (props) => {
     };
     // 投稿のIDが変わった場合は対象の投稿のコメントを入れる。
   });
-// }, [props.sportsId]);
+  // }, [props.sportsId]);
 
   // console.log(acts);
 
@@ -372,10 +376,9 @@ const SportsAct = (props) => {
             {/* <img className={classes.headerimg} alt="complex" src={props.image} variant="rounded"/> */}
             <Box flexGrow={1}>
               <Avatar
-                src={user.userimage}
+                src={props.image}
                 variant="rounded"
                 className={classes.avatar}
-                sizeLarge
               />
             </Box>
             <Box className={classes.details} flexShrink={1}>
@@ -644,7 +647,7 @@ export default SportsAct;
 //   date: date,
 //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
-  /* <GridListTile key={act.img} imgFullWidth>
+/* <GridListTile key={act.img} imgFullWidth>
                   {act.actImage && (
                     <img src={act.actImage} alt={act.acttitle} className={classes.media}/>
                     )}
