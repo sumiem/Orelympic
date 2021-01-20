@@ -27,11 +27,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
-
 }));
 
 const Header = (props) => {
-    const classes = useStyles();
+  const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
@@ -54,8 +53,10 @@ const Header = (props) => {
           >
             Orelympic Home
           </Typography>
-          <Link to="/" color="inherit">
-          <Button variant="contained" color="primary">Login</Button>
+          <Link to="/login" color="inherit">
+            <Button variant="contained" color="primary">
+              Login
+            </Button>
           </Link>
         </Toolbar>
       </AppBar>
@@ -63,4 +64,4 @@ const Header = (props) => {
   );
 };
 
-export default withRouter (Header);
+export default withRouter(Header);

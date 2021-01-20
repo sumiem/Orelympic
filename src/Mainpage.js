@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 import { withRouter, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectUser } from "./features/userSlice";
+import { selectUser, login, logout } from "./features/userSlice";
 // Style用
 import { Avatar, Typography, Box } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";

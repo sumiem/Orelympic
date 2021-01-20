@@ -13,15 +13,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 // import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import SendIcon from "@material-ui/icons/Send";
 
 import { Paper, Modal, IconButton } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import EmailIcon from "@material-ui/icons/Email";
 import CameraIcon from "@material-ui/icons/Camera";
+import InputIcon from "@material-ui/icons/Input";
 
 function getModalStyle() {
   const top = 50;
@@ -36,7 +38,7 @@ function getModalStyle() {
 // スタイル
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    margin: theme.spacing(8, 4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -53,7 +55,15 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-
+  modal: {
+    outline: "none",
+    position: "absolute",
+    width: 400,
+    borderRadius: 10,
+    backgroundColor: "white",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(10),
+  },
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -61,6 +71,22 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(7),
     height: theme.spacing(7),
+  },
+  image: {
+    // imageの検索https://unsplash.com/s/photos/sports https://source.unsplash.com/collection/{COLLECTION ID}
+
+    backgroundImage: "url(https://source.unsplash.com/featured/?Sports)",
+    // "url(https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  },
+  root: {
+    height: "100vh",
   },
 }));
 
@@ -142,226 +168,198 @@ const Login = (props) => {
   }, [props.history]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Grid container component="main" className={classes.root}>
+      {/* <Container component="main" maxWidth="xs"> */}
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {isLogin ? "Login" : "Register"}
-        </Typography>
-        <form className={classes.form} noValidate>
-          {/* フィールドのセット */}
-          {!isLogin && (
-            <>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                autoFocus
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-              />
-              {/* アバター画像登録onChangeImageHandler呼び出し */}
-              <Box textAlign="center">
-                <IconButton>
-                  <label>
-                    <AccountCircleIcon
-                      fontSize="large"
-                      className={
-                        avatarImage
-                          ? styles.login_addIconLoaded
-                          : styles.login_addIcon
-                      }
-                    />
-                    <input
-                      className={styles.login_hiddenIcon}
-                      type="file"
-                      onChange={onChangeImageHandler}
-                    />
-                  </label>
-                </IconButton>
-              </Box>
-            </>
-          )}
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          {/* サインイン */}
-          <Button
-            // 文字が少ないとボタン押せませんよ
-            disabled={
-              isLogin
-                ? !email || password.length < 6
-                : !username || !email || password.length < 6 || !avatarImage
-            }
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            startIcon={<EmailIcon />}
-            onClick={
-              isLogin
-                ? async () => {
-                    try {
-                      await signInEmail();
-                    } catch (err) {
-                      alert(err.message);
-                    }
-                  }
-                : async () => {
-                    try {
-                      await signUpEmail();
-                    } catch (err) {
-                      alert(err.message);
-                    }
-                  }
-            }
-          >
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             {isLogin ? "Login" : "Register"}
-          </Button>
-          {/* パスワード忘れ */}
-          <Grid container>
-            <Grid item xs>
-              <span
-                className={styles.login_reset}
-                onClick={() => setOpenModal(true)}
-              >
-                Forgot password ?
-              </span>
-            </Grid>
-            {/* Resisterにするか？ CSSのトグルモード*/}
-            {/* xsを消すと右寄りに   <Grid item xs> */}
-            <Grid item>
-              <span
-                className={styles.login_toggleMode}
-                onClick={() => setIsLogin(!isLogin)}
-              >
-                {isLogin ? "Create new account ?" : "Back to login"}
-              </span>
-            </Grid>
-          </Grid>
+          </Typography>
+          <form className={classes.form} noValidate>
+            {/* フィールドのセット */}
+            {!isLogin && (
+              <>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                />
+                {/* アバター画像登録onChangeImageHandler呼び出し */}
+                <Box textAlign="center">
+                  <IconButton>
+                    <label>
+                      <AccountCircleIcon
+                        fontSize="large"
+                        className={
+                          avatarImage
+                            ? styles.login_addIconLoaded
+                            : styles.login_addIcon
+                        }
+                      />
+                      <input
+                        className={styles.login_hiddenIcon}
+                        type="file"
+                        onChange={onChangeImageHandler}
+                      />
+                    </label>
+                  </IconButton>
+                </Box>
+              </>
+            )}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
 
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            startIcon={<CameraIcon />}
-            onClick={signInGoogle}
-          >
-            SignIn with Google
-          </Button>
-        </form>
-      </div>
-    </Container>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            {/* サインイン */}
+            <Button
+              // 文字が少ないとボタン押せませんよ
+              disabled={
+                isLogin
+                  ? !email || password.length < 6
+                  : !username || !email || password.length < 6 || !avatarImage
+              }
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              startIcon={<EmailIcon />}
+              onClick={
+                isLogin
+                  ? async () => {
+                      try {
+                        await signInEmail();
+                      } catch (err) {
+                        alert(err.message);
+                      }
+                    }
+                  : async () => {
+                      try {
+                        await signUpEmail();
+                      } catch (err) {
+                        alert(err.message);
+                      }
+                    }
+              }
+            >
+              {isLogin ? "Login" : "Register"}
+            </Button>
+            {/* パスワード忘れ */}
+            <Grid container>
+              <Grid item xs>
+                <span
+                  className={styles.login_reset}
+                  onClick={() => setOpenModal(true)}
+                >
+                  Forgot password ?
+                </span>
+              </Grid>
+              {/* Resisterにするか？ CSSのトグルモード*/}
+              {/* xsを消すと右寄りに   <Grid item xs> */}
+              <Grid item>
+                <span
+                  className={styles.login_toggleMode}
+                  onClick={() => setIsLogin(!isLogin)}
+                >
+                  {isLogin ? "Create new account ?" : "Back to login"}
+                </span>
+              </Grid>
+            </Grid>
+
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              startIcon={<CameraIcon />}
+              onClick={signInGoogle}
+            >
+              SignIn with Google
+            </Button>
+          </form>
+          <Modal open={openModal} onClose={() => setOpenModal(false)}>
+            <div style={getModalStyle()} className={classes.modal}>
+              <div className={styles.login_modal}>
+                <TextField
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  type="email"
+                  name="email"
+                  label="Reset E-mail"
+                  value={resetEmail}
+                  onChange={(e) => {
+                    setResetEmail(e.target.value);
+                  }}
+                />
+                <IconButton onClick={sendResetEmail}>
+                  <SendIcon />
+                </IconButton>
+              </div>
+            </div>
+          </Modal>
+
+          <Link to="/home">
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              startIcon={<InputIcon />}
+            >
+              ログインせずに見る
+            </Button>
+          </Link>
+        </div>
+      </Grid>
+    </Grid>
+    // </Container>
   );
 };
 
 export default withRouter(Login);
-
-{
-  /* 前の設定 */
-}
-//   <div justify="center">
-//   <FormControl>
-//     <TextField
-//       name="email"
-//       label="E-mail"
-//       value={email} //useStateのEメールが入ってくる
-//       onChange={(e) => setEmail(e.target.value)}
-//     />
-//   </FormControl>
-//   <br />
-//   {/* パスワードフォーム*/}
-//   <FormControl>
-//     <TextField
-//       name="password"
-//       label="Password"
-//       type="password"
-//       value={password} //useStateのEメールが入ってくる
-//       onChange={(e) => setPassword(e.target.value)}
-//     />
-//   </FormControl>
-//   <br />
-//   <Button
-//     variant="contained"
-//     color="primary"
-//     size="small"
-//     //   ボタンを押した時の登録処理を書く
-//     onClick={
-//       isLogin //Login成功してる時
-//         ? async () => {
-//             try {
-//               await auth.signInWithEmailAndPassword(email, password);
-//               props.history.push("/");
-//             } catch (error) {
-//               //ログインできない時、失敗した時はえらーMSG
-//               alert(error.message);
-//             }
-//           }
-//         : async () => {
-//             try {
-//               // 新規登録　作成時 firebaseに[createUserWithEmailAndPassword]というものがあるのでそれに
-//               // email, passwordで保持した状態を送り→成功すればhistoryによって画面遷移が実行される
-//               await auth.createUserWithEmailAndPassword(
-//                 email,
-//                 password
-//               );
-//               props.history.push("/");
-//             } catch (error) {
-//               // ログインできない、失敗したときはエラーで表示される
-//               alert(error.message);
-//             }
-//           }
-//     }
-//   >
-//     {isLogin ? "ログインする" : "登録する"}
-//   </Button>
-//   {/* ここに追加 */}
-//   <Typography align="center">
-//     <span onClick={() => setIsLogin(!isLogin)}>
-//       {isLogin ? "Create new account ?" : "Back to Login"}
-//     </span>
-//   </Typography>
-// </div>

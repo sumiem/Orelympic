@@ -27,14 +27,14 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
-import { red } from "@material-ui/core/colors";
+// import { red } from "@material-ui/core/colors";
 import mainVisual from "./img/Mainvisual2.jpg";
 // import StarBorderIcon from "@material-ui/icons/StarBorder";
 import goldMedal from "./img/goldMedal.png";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
 // function getModalStyle() {
 //   const top = 50 + rand();
 //   const left = 50 + rand();
@@ -388,7 +388,7 @@ const SportsAct = (props) => {
             </Box>
           </CardContent>
 
-          <CardActions textAlign="right" justify="center">
+          <CardActions justify="center">
             {/* <Box className={classes.root2} height="1"> */}
             <Box width="30%" height="10%">
               {/* <img className={classes.img} alt="complex" src={goldMedal} /> */}
@@ -397,7 +397,7 @@ const SportsAct = (props) => {
               variant="outlined"
               color="primary"
               onClick={handleClickOpen}
-              flexShrink={0}
+              // flexShrink={0}
             >
               やったよ！
             </Button>
@@ -406,8 +406,8 @@ const SportsAct = (props) => {
               open={open}
               onClose={handleClose}
               aria-labelledby="form-dialog-title"
-              fullWidth
-              maxWidth="md"
+              // fullWidth
+              maxWidth="lg"
             >
               <DialogTitle id="form-dialog-title">
                 スポーツ経験を登録する
@@ -417,7 +417,7 @@ const SportsAct = (props) => {
                 <form onSubmit={sendAct}>
                   <div>
                     <div>
-                      <Box textAlign="center">
+                      <Box className="classes.box1">
                         <IconButton>
                           <label>
                             <AddAPhotoIcon
@@ -586,7 +586,7 @@ const SportsAct = (props) => {
                       />
                     )}
                   </Box>
-                  <Box className={classes.actdetail} fullwidth>
+                  <Box className={classes.actdetail}>
                     <Typography className={classes.acttitle}>
                       {" "}
                       {act.acttitle}
@@ -634,6 +634,9 @@ export default SportsAct;
 //       return () => unSub();
 //     },);
 // 例 UID: {user && user.uid}
+// const unSub = auth.onAuthStateChanged((user) => {
+//  if(!user){return <Redirect to="/home"}>}
+// !user && return <Redirect to="/home"}>;
 
 // ユーザ情報
 //   avatar: user.photoUrl,

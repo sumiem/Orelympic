@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { auth } from "./firebase";
+// import { withRouter, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "./features/userSlice";
 import {
@@ -26,7 +27,7 @@ import UserInfo from "./UserInfo";
 // import Test from "./Test"
 import MySports from "./MySports";
 
-const App = (props) => {
+const App = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
@@ -50,47 +51,40 @@ const App = (props) => {
   }, [dispatch]);
   // 素の文章
   //       !authUser && props.history.push("login");
-
   // ログインしてる場合の表示（マイページ）
-  return (
-    <>
-      <Router>
-        {/* user.uid ? (userいる時):(いない時) */}
-        {/* 
-      <div>
-        <Mainpage />
-      </div> */}
-        {/* ): ( */}
-        {/* <Login /> */}
-        {/* // userいるとき、Feed　いない時Auth */}
-        {/* )} */}
-        <Switch>
-          {user.uid ? (
-            <Route exact path="/" component={Mainpage} />
-          ) : (<Route exact path="/login" component={Login} />)};
+  // render() {
+      return (
+        <>
+          <BrowserRouter>
+            {/* {user.uid ? (<Mainpage />):(<Login />)}; */}
+            <Switch>
+              {user.uid ? (
+                <Route exact path="/" component={Mainpage} />
+              ) : (<Route exact path="/login" component={Login} />)};
 
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/sportsexp" component={SportsExp} />
-          <Route exact path="/sportsform" component={SportsForm} />
-          <Route exact path="/sportslist" component={SportsList} />
-          <Route exact path="/sportsresister" component={SportsResister} />
-          <Route exact path="/mysports" component={MySports} />
-        </Switch>
-      </Router>
-      {/* <div>
-    <Mainpage />
-    </div> */}
-      {/* <button
-        onClick={async () => { try {
-            await auth.signOut();
-            props.history.push("login");
-          } catch (error) { alert(error.message) }}}>LOGOUT
-      </button> */}
-    </>
-  );
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/sportsexp" component={SportsExp} />
+              <Route exact path="/sportsform" component={SportsForm} />
+              <Route exact path="/sportslist" component={SportsList} />
+              <Route exact path="/sportsresister" component={SportsResister} />
+              <Route exact path="/mysports" component={MySports} />
+            </Switch>
+          </BrowserRouter>
+        </>
+      )
+    // }
 };
 export default App;
 // 
 // {/* <div><Mainpage /></div> */}
             // {/* // <Route exact path="/home" component={Home} /> */}
             // {/* <Route exact path="/login" component={Login} /> */}
+    //               {/* <div>
+    // <Mainpage />
+    // </div> */}
+    //   {/* <button
+    //     onClick={async () => { try {
+    //         await auth.signOut();
+    //         props.history.push("login");
+    //       } catch (error) { alert(error.message) }}}>LOGOUT
+    //   </button> */}

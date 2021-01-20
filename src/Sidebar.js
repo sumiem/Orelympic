@@ -29,7 +29,7 @@ const Sidebar = (props) => {
         <Typography variant="h6" gutterBottom>
           いますぐ始める？
         </Typography>
-        <Link to="/">
+        <Link to="/login">
                   <Button variant="contained" color="primary">
                     ログインページへ
                   </Button>
