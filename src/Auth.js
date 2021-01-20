@@ -1,14 +1,14 @@
 import React from 'react'
 
-const Auth = () => {
-    return (
-        <div>
+// const Auth = () => {
+//     return (
+//         <div>
             
-        </div>
-    )
-}
+//         </div>
+//     )
+// }
 
-export default Auth
+// export default Auth
 
 
 // import React from 'react';

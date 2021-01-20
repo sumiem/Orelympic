@@ -17,9 +17,6 @@ import Main from "./Main";
 import Sidebar from "./Sidebar";
 import mainvisual1 from "./img/mainvisual1.jpg";
 // import Footer from './Footer';
-// import post1 from './blog-post.1.md';
-// import post2 from './blog-post.2.md';
-// import post3 from './blog-post.3.md';
 
 // スタイルの形式
 const useStyles = makeStyles((theme) => ({

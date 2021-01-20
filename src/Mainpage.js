@@ -129,7 +129,7 @@ const Mainpage = (props) => {
             >
               Orelympic Personal Mainpage
             </Typography>
-            {/* あとで、アカウントのボタン実装https://material-ui.com/components/app-bar/#app-bar*/}
+
             {auth && (
               <div>
                 <IconButton

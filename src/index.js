@@ -11,7 +11,6 @@ import store from "./app/store";
 
 // import Main from "./Main";
 // import Mainpage from "./Mainpage";
-// import Mydetail from "./Mydetail";
 // import SportsResister from "./SportsResister";
 // import SportsList from "./SportsList";
 // import SportsExp from "./SportsExp";
@@ -60,13 +59,3 @@ ReactDOM.render(
 
 serviceWorker.unregister();
 
-// {/* ログインしたときはAppを表示 */}
-// <Route exact path="/" component={App} />
-// {/* ログインしていないときはLoginを表示 */}
-// <Route exact path="/login" component={Login} />
-// <Route exact path="/home" component={Home} />
-// <Route exact path="/album" component={Album} />
-
-// {/* 内容確認用 */}
-// <Route exact path="/main" component={Main} />
-// {/* <Route exact path="/mydetail" component={Mydetail} /> */}

@@ -18,7 +18,6 @@ import Home from "./Home";
 import SportsForm from "./SportsForm";
 
 import Main from "./Main";
-import Mydetail from "./Mydetail";
 import SportsResister from "./SportsResister";
 import SportsList from "./SportsList";
 import SportsAct from "./SportsAct";

@@ -1,6 +1,6 @@
 import React from "react";
 import { auth } from "./firebase";
-import { withRouter, Redirect, useHistory } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
@@ -66,15 +66,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const sidebar = {
-//   title: "Login",
-//   description: "今すぐ始める！　ログインページへ",
-//   social: [
-//     { name: "Twitter", icon: TwitterIcon },
-//     { name: "Facebook", icon: FacebookIcon },
-//   ],
-// };
-
 const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
@@ -119,11 +110,9 @@ const NavBar = (props) => {
                   try {
                     await auth.signOut();
                     history.push("login");
-                    // return <Redirect to="/" />;
                   } catch (error) {
                     alert(error.message);
                   }
-                  // await auth.signOut();
                 }}
               >
                 Logout
