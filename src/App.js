@@ -27,6 +27,7 @@ import SportsList from "./SportsList";
 // import Test from "./Test"
 import MySports from "./MySports";
 import UserResistration from "./UserResistration";
+import FacilityResistration from "./FacilityResistration";
 
 const App = () => {
   const user = useSelector(selectUser);
@@ -71,6 +72,7 @@ const App = () => {
               <Route exact path="/sportsresister" component={SportsResister} />
               <Route exact path="/mysports" component={MySports} />
               <Route exact path="/userresistration" component={UserResistration} />
+              <Route exact path="/facilityresistration" component={FacilityResistration} />
             </Switch>
           </BrowserRouter>
         </>
