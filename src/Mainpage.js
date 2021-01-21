@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { db, auth } from "./firebase";
 import { withRouter, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "./features/userSlice";
 // Style用
 import { Avatar, Typography, Box } from "@material-ui/core";
@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
+// import AccountCircle from "@material-ui/icons/AccountCircle";
 import MySports from "./MySports";
 import Main from "./Main";
 
@@ -56,48 +56,42 @@ const useStyles = makeStyles((theme) => ({
   apptitle: {
     flexGrow: 1,
   },
+  box1: {
+    marginRight: "30px",
+  },
 }));
 
 const Mainpage = (props) => {
-  const user = useSelector(selectUser);
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((user) => {
       !user && props.history.push("login");
     });
-    return () => unSub();
+  return () => unSub();
   },[props.history]);
+    const user = useSelector(selectUser);
   // const user = useSelector(selectUser);
-  // const [sports, setSports] = useState([
-  //   {
-  //     id: " 1",
-  //     title: "aaaa",
-  //     image: "",
-  //     desc: "sssss",
-  //     sports_no: "1",
-  //   },
-  // ]);
-  //記述２.useEffectの処理
-  // useEffect(() => {
-  //   const firebaseData = db
-  //     .collection("sports")
-  //     // .orderBy("sports_no", "desc")
-  //     .onSnapshot((snapshot) =>
-  //       setSports(
-  //         snapshot.docs.map((doc) => ({
-  //           id: doc.id,
-  //           title: doc.data().title,
-  //           image: doc.data().image,
-  //           desc: doc.data().desc,
-  //           sports_no: doc.data().sports_no,
-  //         }))
-  //       )
-  //     );
-  //   return () => {
-  //     firebaseData();
-  //   };
-  // }, []);
+  // const dispatch = useDispatch();
 
-  // console.log(sports);
+  // useEffect(() => {
+  //   const unSub = auth.onAuthStateChanged((authUser) => {
+  //     // if (authUser){
+  //     // }else{ props.history.push("login"); };
+  //     if (authUser) {
+  //       dispatch(
+  //         login({
+  //           uid: authUser.uid,
+  //           photoUrl: authUser.photoURL,
+  //           displayName: authUser.displayName,
+  //         })
+  //       );
+  //     } else {
+  //       dispatch(logout());
+  //     }
+  //   });
+  //   return () => unSub();
+  // }, [dispatch]);
+
+  // console.log(user.photoUrl);
   const classes = useStyles();
 
   return (
@@ -133,17 +127,13 @@ const Mainpage = (props) => {
                   // onClick={handleMenu}
                   color="inherit"
                 >
-                  <AccountCircle
+                  {/* <AccountCircle
                     src={user.photoUrl}
                     className={classes.avatar}
-                  />
-                  {/* <Avatar 
-                      src={user.photoUrl}
-                      className={classes.avatar}
-                      /> */}
+                  /> */}
+                  <Avatar src={user.photoUrl} className={classes.avatar} />
                   <Typography>{user.displayName}</Typography>
                 </IconButton>
-
                 <Button
                   color="inherit"
                   id="menu-appbar"
@@ -168,8 +158,16 @@ const Mainpage = (props) => {
 
           <div className={classes.heroContent}>
             <Container maxWidth="sm">
-              <Box display="flex" justifyContent="center" flexGrow="1">
-                <Avatar alt="Remy Sharp" src="" className={classes.large} />
+              <Box
+                display="flex"
+                justifyContent="center"
+                flexGrow="1"
+                spacing="2"
+              >
+                <Box className={classes.box1}>
+                  <Avatar src={user.photoUrl} className={classes.large} />
+                  {/* <Avatar src={user.photoURL} className={classes.large} /> */}
+                </Box>
                 <Typography
                   component="h1"
                   variant="h2"

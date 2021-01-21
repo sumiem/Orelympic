@@ -83,6 +83,16 @@ const SportsResister = () => {
     },
   ]);
 
+//   var user = firebase.auth().currentUser;
+//   var name, email, photoUrl, uid, emailVerified;
+// if (user != null) {
+//     name = user.displayName;
+//     email = user.email;
+//     photoUrl = user.photoURL;
+//     emailVerified = user.emailVerified;
+//     uid = user.uid;  
+//   };
+// console.log(photoUrl)
   //記述２.useEffectの処理を書きます
   useEffect(() => {
     const firebaseData = db
