@@ -12,8 +12,8 @@ import NavBar from "./NavBar";
 // import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Gridlist from "@material-ui/core/GridList";
-// import Grid from '@material-ui/core/Grid';
+// import Gridlist from "@material-ui/core/GridList";
+import Grid from '@material-ui/core/Grid';
 import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles((theme) => ({
@@ -87,9 +87,9 @@ const SportsExp = (props) => {
       <div>
         {sports[0]?.id && (
           <>
-            <Container className={classes.cardGrid} maxWidth="md">
+            <Container className={classes.cardGrid} maxWidth="md" spacing={4}>
               {/* <Grid container spacing={2}> */}
-              <Gridlist spacing={4}>
+              <Grid container spacing={4}>
                 {sports.map((sport) => (
                   <SportsAct
                     key={sport.id}
@@ -103,7 +103,7 @@ const SportsExp = (props) => {
                     sportsavatar={sport.sportsavatar}
                   />
                 ))}
-              </Gridlist>
+              </Grid>
               {/* </Grid> */}
             </Container>
           </>

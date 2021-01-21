@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    color: theme.palette.primary.light,
+    // color: theme.palette.primary.light,
+    color: "000000"
   },
   titleBar: {
     background:

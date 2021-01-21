@@ -65,7 +65,7 @@ const Mainpage = (props) => {
       !user && props.history.push("login");
     });
     return () => unSub();
-  });
+  },[props.history]);
   // const user = useSelector(selectUser);
   // const [sports, setSports] = useState([
   //   {
@@ -208,11 +208,11 @@ const Mainpage = (props) => {
                       今までの記録を見る
                     </Button>
                   </Grid> */}
-                    <Grid item>
+                    {/* <Grid item>
                       <Button variant="outlined" color="primary">
                         ユーザー情報の登録
                       </Button>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </div>
               </Grid>

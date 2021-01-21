@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db, storage } from "./firebase";
 import firebase from "firebase/app";
+import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import "date-fns";
@@ -62,10 +63,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     maxWidth: 360,
+    borderRadius: 20,
     // maxHeight: 2000,
   },
   root2: {
     display: "flex",
+    margin: 0,
+  },
+  toroku: {
+    margin: 0,
+    padding: 0,
   },
   // content: {
   //   flex: '1 0 auto',
@@ -151,6 +158,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  hiddenicon: {
+    textAlign: "center",
+    display: "none",
+  },
+  addiconloaded: {
+    cursor: "pointer",
+    color: "gray",
+  },
+  addicon: {
+    cursor: "pointer",
+    color: "primary",
   },
 }));
 
@@ -253,7 +272,7 @@ const SportsAct = (props) => {
       unSub();
     };
     // 投稿のIDが変わった場合は対象の投稿のコメントを入れる。
-  });
+  },[]);
   // }, [props.sportsId]);
 
   // console.log(acts);
@@ -342,7 +361,7 @@ const SportsAct = (props) => {
 
   return (
     <>
-      <Grid item key={props} xs={12} sm={5} md={4}>
+      <Grid item key={props} xs={12} sm={4} md={4}>
         <Card className={classes.root}>
           <CardContent className={classes.root2}>
             {/* <img className={classes.headerimg} alt="complex" src={props.image} variant="rounded"/> */}
@@ -354,15 +373,15 @@ const SportsAct = (props) => {
               />
             </Box>
             <Box className={classes.details} flexShrink={1}>
-              <Typography component="h5" variant="h5">
+              <Typography component="h6" variant="h6">
                 {props.sportsname}
               </Typography>
             </Box>
           </CardContent>
 
-          <CardActions justify="center">
+          <CardActions justify="center" className={classes.toroku}>
             {/* <Box className={classes.root2} height="1"> */}
-            <Box width="30%" height="10%">
+            <Box width="30%" height="8%" className={classes.toroku}>
               {/* <img className={classes.img} alt="complex" src={goldMedal} /> */}
             </Box>
             <Button
@@ -378,8 +397,7 @@ const SportsAct = (props) => {
               open={open}
               onClose={handleClose}
               aria-labelledby="form-dialog-title"
-              // fullWidth
-              maxWidth="lg"
+              fullWidth
             >
               <DialogTitle id="form-dialog-title">
                 スポーツ経験を登録する
@@ -395,9 +413,14 @@ const SportsAct = (props) => {
                             <AddAPhotoIcon
                               color="primary"
                               fontSize="large"
-                              className={actImage}
-                            />
+                              className={
+                                actImage
+                                  ? classes.addiconloaded
+                                  : classes.addicon
+                              }
+                            />写真を選択
                             <input
+                              className={classes.hiddenicon}
                               type="file"
                               onChange={onChangeImageHandler}
                             />
@@ -592,7 +615,7 @@ const SportsAct = (props) => {
   );
 };
 
-export default SportsAct;
+export default withRouter(SportsAct);
 
 // メダル　<a href='https://ja.pngtree.com/so/メダルクリップ'>メダルクリップ pngから ja.pngtree.com</a>
 // User情報取得

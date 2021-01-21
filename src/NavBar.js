@@ -1,6 +1,6 @@
 import React from "react";
 import { auth } from "./firebase";
-import { withRouter, useHistory } from "react-router-dom";
+import { withRouter, useHistory, Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -90,11 +90,16 @@ const NavBar = (props) => {
             className={classes.apptitle}
             noWrap
           >
-            Orelympic Personal Mainpage
+            Orelympic Personal Page
           </Typography>
           {/* あとで、アカウントのボタン実装https://material-ui.com/components/app-bar/#app-bar*/}
           {auth && (
             <div>
+              <Link to ="/" color="inherit">
+              <Button variant="contained" color="primary">
+                Mainpage
+                </Button>
+              </Link>
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
