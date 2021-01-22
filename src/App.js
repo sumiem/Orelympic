@@ -21,6 +21,7 @@ import SportsForm from "./SportsForm";
 // import Main from "./Main";
 import SportsResister from "./SportsResister";
 import SportsList from "./SportsList";
+// import SportsLists from "./SportsLists";
 // import SportsAct from "./SportsAct";
 // import UserInfo from "./UserInfo";
 // import UserInfoTEST from "./UserInfoTEST"
@@ -69,6 +70,7 @@ const App = () => {
               <Route exact path="/sportsexp" component={SportsExp} />
               <Route exact path="/sportsform" component={SportsForm} />
               <Route exact path="/sportslist" component={SportsList} />
+              {/* <Route exact path="/sportslists" component={SportsLists} /> */}
               <Route exact path="/sportsresister" component={SportsResister} />
               <Route exact path="/mysports" component={MySports} />
               <Route exact path="/userresistration" component={UserResistration} />

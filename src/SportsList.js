@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-
+import { withRouter, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
+import Paper from "@material-ui/core/Paper";
+// import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import NavBar from "./NavBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "lg",
-    flexGrow: 1,
+    display: "flex",
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
   },
   // icon: {
   //   marginRight: theme.spacing(2),
@@ -44,48 +51,60 @@ const useStyles = makeStyles((theme) => ({
 
 const SportsList = () => {
   const classes = useStyles();
-  const [sports, setSports] = useState([
-    {
-      id: "",
-      image: "",
-      sportsid: "",
-      sportsname: "",
-      detail: "",
-      username: "",
-      timestamp: "",
-    },
+    // const classes = useStyles();
+    const [sports, setSports] = useState([
+      {
+          id: "",
+          image: "",
+          // sportsid: "",
+          sportsname: "",
+          detail: "",
+          username: "",
+          timestamp: "",
+          sportsLogo: "",
+      },
   ]);
 
   useEffect(() => {
-    const unSub = db
-      .collection("sports")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) =>
-        setSports(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            image: doc.data().image,
-            sportsid: doc.data().sportsid,
-            sportsname: doc.data().sportsname,
-            detail: doc.data().detail,
-            timestamp: doc.data().timestamp,
-          }))
-        )
-      );
-    return () => {
-      unSub();
-    };
-  }, []);
+      const unSub = db
+        .collection("sports")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) =>
+          setSports(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              image: doc.data().image,
+              sportsid: doc.data().sportsid,
+              sportsname: doc.data().sportsname,
+              detail: doc.data().detail,
+              timestamp: doc.data().timestamp,
+              sportsLogo: doc.data().sportsLogo,
+            }))
+          )
+        );
+      return () => {
+        unSub();
+      };
+    }, []);
+
 
   // firebaseの情報を取得します
-  // console.log (sports);
+  // console.log(sports);
 
   // 表示
   return (
     <>
-      <div>
-        <Typography>スポーツ一覧</Typography>
-      </div>
+      <NavBar />
+      <Container maxWidth="lg" className={classes.paper}>
+      {/* <Paper className={classes.paper}> */}
+      <Typography variant="h3" gutterBottom>
+      Sports List
+      </Typography>
+      {/* </Paper> */}
+      </Container>
+      {/* {sports.map((sport) => (
+            <p>{sport.detail}</p>
+        ))} */}
 
       {/* <div>{props.sportsname}</div> */}
       {/* <div>{props.timestamp}</div> */}
@@ -94,7 +113,7 @@ const SportsList = () => {
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {sports.map((sport) => (
-              <Grid item key={sport.id} xs={12} sm={6} md={4}>
+              <Grid item key={sport.id} xs={12} sm={6} md={6}>
                 <Card className={classes.root}>
                   <CardActionArea>
                     <CardMedia
@@ -110,23 +129,24 @@ const SportsList = () => {
                       <Typography gutterBottom variant="h5" component="h2">
                         {sport.sportsname}
                       </Typography>
-                      <Typography
+                      <Typography gutterBottom variant="h6" component="h6">{sport.detail}</Typography>
+                      {/* <Typography
                         variant="body2"
                         color="textSecondary"
                         component="p"
                       >
-                        {sports.detail}
-                      </Typography>
+                        {sport.detail}
+                      </Typography> */}
                     </CardContent>
                   </CardActionArea>
-                  <CardActions>
+                  {/* <CardActions>
                     <Button size="small" color="primary">
                       View
                     </Button>
                     <Button size="small" color="primary">
                       スポーツ登録リンク
                     </Button>
-                  </CardActions>
+                  </CardActions> */}
                 </Card>
               </Grid>
             ))}
@@ -137,7 +157,7 @@ const SportsList = () => {
   );
 };
 
-export default SportsList;
+export default withRouter(SportsList);
 
 // <ul>
 //     {sports.map((sport) => (

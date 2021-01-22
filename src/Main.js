@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
+import { withRouter, Link } from "react-router-dom";
 // Style 用
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -112,9 +113,15 @@ const Main = (props) => {
           {/* <Divider /> */}
           {/* SPORTS内容 */}
           <Paper className={classes.paper}>
+
             <Typography variant="h6" gutterBottom>
               Sports
             </Typography>
+            <Link to="/sportslist" color="inherit">
+            <Typography variant="caption" color="textPrimary" gutterBottom>
+             Details
+            </Typography>
+            </Link>
             <div className={classes.root}>
               <GridList cellHeight={180} className={classes.gridList2} cols={3}>
                 {sports.map((sportsdata) => (
@@ -173,4 +180,4 @@ const Main = (props) => {
   );
 };
 
-export default Main;
+export default withRouter(Main);

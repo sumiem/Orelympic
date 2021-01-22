@@ -18,6 +18,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 import MySports from "./MySports";
 import Main from "./Main";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -69,6 +72,15 @@ const Mainpage = (props) => {
   return () => unSub();
   },[props.history]);
     const user = useSelector(selectUser);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
   // const user = useSelector(selectUser);
   // const dispatch = useDispatch();
 
@@ -100,15 +112,30 @@ const Mainpage = (props) => {
         <CssBaseline />
         <AppBar position="relative">
           <Toolbar>
-            {/* <CameraIcon className={classes.icon} /> */}
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
+          <IconButton
+            edge="start"
+            // className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+            onClick={handleClick}
+          >
+            <MenuIcon />           
+          </IconButton>
+        <Menu
+          id="fade-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <Link to ="/" color="inherit">
+          <MenuItem onClick={handleClose}>mainpage</MenuItem></Link>
+          <Link to ="/sportsexp" color="inherit">
+          <MenuItem onClick={handleClose}>mySportsList</MenuItem></Link>
+          <Link to ="/sportslist" color="inherit">
+          <MenuItem onClick={handleClose}>sportslist</MenuItem></Link>
+        </Menu>
             <Typography
               variant="h6"
               color="inherit"

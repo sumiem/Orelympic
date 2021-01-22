@@ -13,6 +13,9 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 // import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
 
 // スタイルの形式
 const useStyles = makeStyles((theme) => ({
@@ -70,20 +73,45 @@ const useStyles = makeStyles((theme) => ({
 const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          {/* <CameraIcon className={classes.icon} /> */}
           <IconButton
             edge="start"
-            className={classes.menuButton}
+            // className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={handleClick}
           >
-            <MenuIcon />
+            <MenuIcon />           
           </IconButton>
+        <Menu
+          id="fade-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Fade}
+        >
+          <Link to ="/" color="inherit">
+          <MenuItem onClick={handleClose}>mainpage</MenuItem></Link>
+          <Link to ="/sportsexp" color="inherit">
+          <MenuItem onClick={handleClose}>mySportsList</MenuItem></Link>
+          <Link to ="/sportslist" color="inherit">
+          <MenuItem onClick={handleClose}>sportslist</MenuItem></Link>
+        </Menu>
           <Typography
             variant="h6"
             color="inherit"
