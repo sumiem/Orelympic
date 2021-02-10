@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  link: {
+   textAlign: "right",
+   marginRight: "0",
+  },
 }));
 
 const SportsList = () => {
@@ -62,6 +66,7 @@ const SportsList = () => {
           username: "",
           timestamp: "",
           sportsLogo: "",
+          sportsUrl: "",
       },
   ]);
 
@@ -79,6 +84,7 @@ const SportsList = () => {
               detail: doc.data().detail,
               timestamp: doc.data().timestamp,
               sportsLogo: doc.data().sportsLogo,
+              sportsUrl: doc.data().sportsUrl,
             }))
           )
         );
@@ -138,6 +144,7 @@ const SportsList = () => {
                         {sport.detail}
                       </Typography> */}
                     </CardContent>
+                    <a target="_blank" href={sport.sportsUrl} className={classes.link}>もっと知る</a>
                   </CardActionArea>
                   {/* <CardActions>
                     <Button size="small" color="primary">

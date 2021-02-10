@@ -21,6 +21,7 @@ import SportsForm from "./SportsForm";
 // import Main from "./Main";
 import SportsResister from "./SportsResister";
 import SportsList from "./SportsList";
+import InstList from "./InstList";
 // import SportsLists from "./SportsLists";
 // import SportsAct from "./SportsAct";
 // import UserInfo from "./UserInfo";
@@ -29,7 +30,9 @@ import SportsList from "./SportsList";
 import MySports from "./MySports";
 import UserResistration from "./UserResistration";
 import FacilityResistration from "./FacilityResistration";
-
+import InstResistration from "./InstResistration";
+import CourseList from "./CourseList";
+import MyActList from "./MyActList";
 const App = () => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -75,6 +78,10 @@ const App = () => {
               <Route exact path="/mysports" component={MySports} />
               <Route exact path="/userresistration" component={UserResistration} />
               <Route exact path="/facilityresistration" component={FacilityResistration} />
+              <Route exact path="/instresistration" component={InstResistration} />
+              <Route exact path="/courselist" component={CourseList} />
+              <Route exact path="/instlist" component={InstList} />
+              <Route exact path="/myactlist" component={MyActList}/>
             </Switch>
           </BrowserRouter>
         </>

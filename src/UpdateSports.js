@@ -60,18 +60,27 @@ const UpdateSports = (props) => {
     if (e.target.files[0]) {
       setInputImage(e.target.files[0]);
       e.target.value = "";
-    };
+    }
   };
- 
-// imageのURLを直接変更する場合
-    const [imageUrl, setImageUrl] = useState(null);
-    const sendImageUrl = (e) =>{
-        e.preventDefault();
-        db.collection("sports").doc(props.id).update({
-        image: imageUrl,
-          });
-          setImageUrl("");
-    };
+
+  // imageのURLを直接変更する場合
+  const [imageUrl, setImageUrl] = useState(null);
+  const sendImageUrl = (e) => {
+    e.preventDefault();
+    db.collection("sports").doc(props.id).update({
+      image: imageUrl,
+    });
+    setImageUrl("");
+  };
+  // スポーツ情報のオリンピックリンク
+  const [sportsUrl, setSportsUrl] = useState("");
+  const sendSportsUrl = (e) => {
+    e.preventDefault();
+    db.collection("sports").doc(props.id).update({
+      sportsUrl: sportsUrl,
+    });
+    setSportsUrl("");
+  };
 
   const sendSportsdata = (e) => {
     e.preventDefault();
@@ -143,6 +152,7 @@ const UpdateSports = (props) => {
       </div>
       <div>
         <div>スポーツ詳細：{props.detail} </div>
+        <div>スポーツURL："{props.sportsUrl}" </div>
       </div>
       <div>{/* <div>更新情報</div> */}</div>
       <div>
@@ -171,7 +181,7 @@ const UpdateSports = (props) => {
               />
               <IconButton>
                 <label>
-                  <AddAPhotoIcon fontSizeLarge/>
+                  <AddAPhotoIcon fontSizeLarge />
                   <input
                     type="file"
                     onChange={onChangeImageHandler}
@@ -190,9 +200,10 @@ const UpdateSports = (props) => {
               </Button>
             </form>
           </Grid>
-          <Typography>URLを直接入力</Typography>
-          <form onSubmit={sendImageUrl}>
-          <input
+          <Grid>
+            <Typography>URLを直接入力</Typography>
+            <form onSubmit={sendImageUrl}>
+              <input
                 className="imageUrl"
                 placeholder="imageUrlを直接編集"
                 type="text"
@@ -200,7 +211,7 @@ const UpdateSports = (props) => {
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
               />
-            <Button
+              <Button
                 type="submit"
                 disabled={!imageUrl}
                 Button
@@ -209,8 +220,32 @@ const UpdateSports = (props) => {
               >
                 投稿する
               </Button>
-          </form>
-          
+            </form>
+          </Grid>
+
+          <Grid>
+            <Typography>オリンピック種目URL</Typography>
+            <Typography>URLを直接入力</Typography>
+            <form onSubmit={sendSportsUrl}>
+              <input
+                className="sportsUrl"
+                placeholder="sportsUrlを直接編集"
+                type="text"
+                autoFocus
+                value={imageUrl}
+                onChange={(e) => setSportsUrl(e.target.value)}
+              />
+              <Button
+                type="submit"
+                disabled={!sportsUrl}
+                Button
+                variant="contained"
+                color="primary"
+              >
+                投稿する
+              </Button>
+            </form>
+          </Grid>
 
           <Grid item>
             {/* <Button variant="outlined" color="primary">

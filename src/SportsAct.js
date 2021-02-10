@@ -32,6 +32,8 @@ import IconButton from "@material-ui/core/IconButton";
 import mainVisual from "./img/Mainvisual2.jpg";
 // import StarBorderIcon from "@material-ui/icons/StarBorder";
 import goldMedal from "./img/goldMedal.png";
+import msilver from "./img/mSilver.png";
+import mbronze from "./img/mBronze.png";
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -142,7 +144,7 @@ const useStyles = makeStyles((theme) => ({
 
   actdetail: {
     position: "absolute",
-    bottom: 0,
+    bottom: "$30%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -251,7 +253,7 @@ const SportsAct = (props) => {
             id: doc.id,
             // sportsのドキュメントid(上から受信)
             sportsId: doc.data().sportsId,
-            // sportsno: doc.data().sportsno,
+            sportsno: doc.data().sportsno,
             sportsname: doc.data().sportsname,
             sportsimage: doc.data().sportsimage,
             // 投稿の情報
@@ -463,22 +465,22 @@ const SportsAct = (props) => {
                       <FormControlLabel
                         value="4"
                         control={<Radio />}
-                        label="試合したよ"
+                        label="試合したよ(金メダル!)"
                       />
                       <FormControlLabel
                         value="3"
                         control={<Radio />}
-                        label="レッスン受けたよ"
+                        label="レッスン受けたよ(銀メダル!)"
                       />
                       <FormControlLabel
                         value="2"
                         control={<Radio />}
-                        label="ちょこっと体験"
+                        label="ちょこっと体験(銅メダル!)"
                       />
                       <FormControlLabel
                         value="1"
                         control={<Radio />}
-                        label="なりきり写真！"
+                        label="なりきり写真！(銅メダル!おまけ)"
                       />
                     </RadioGroup>
                   </div>
@@ -570,7 +572,7 @@ const SportsAct = (props) => {
                       />
                     )}
                   </div> */}
-                  <Box className={classes.imageButton}>
+                  {/* <Box className={classes.imageButton}>
                     {act.acttitle && (
                       <img
                         className={classes.img3}
@@ -580,7 +582,19 @@ const SportsAct = (props) => {
                         width="128"
                       />
                     )}
-                  </Box>
+                  </Box> */}
+                  <Box className={classes.imageButton}>
+                  {
+                    (() => {
+                        if (act.level == 4)
+                            return <img className={classes.img3} alt="complex" src={goldMedal} height="125" width="125"></img>
+                        else if (act.level == 3)
+                            return <img className={classes.img3} alt="complex" src={msilver} height="100"width="100"></img>
+                        else
+                        return <img className={classes.img3} alt="complex" src={mbronze} height="100" width="100"></img>
+                    })()
+                }
+                </Box>
                   <Box className={classes.actdetail}>
                     <Typography className={classes.acttitle}>
                       {" "}

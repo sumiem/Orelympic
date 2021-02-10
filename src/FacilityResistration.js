@@ -77,7 +77,7 @@ const FacilityResistration = () => {
   const user = useSelector(selectUser);
 
   const [inputImage, setInputImage] = useState(null);
-  const [resistDate, setResistData] = useState(null);
+  const [resistDate, setResistDate] = useState(null);
   const [facilityName, setFacilityName] = useState("");
   const [facilityType, setFacilityType] = useState("");
   const [facilityUrl, setFacilityUrl] = useState("");
@@ -87,6 +87,7 @@ const FacilityResistration = () => {
   const [facilityEmail, setFacilityEmail] = useState("");
   const [facilityDetail, setFacilityDetail] = useState("");
   const [facilityNo, setFacilityNo] = useState("");
+  const [facilityComment, setFacilityComment]=useState("");
   // const [facilityNo, setFacilityNo] = useState("");
   const [facilityStyle, setFacilityStyle] = useState("");
   const [area, setArea] = useState("");
@@ -107,6 +108,7 @@ const FacilityResistration = () => {
       facilityUrl: "",
       facilityPostCode: "",
       facilityStyle: "",
+      facilityComment:"",
     },
   ]);
   const names = [
@@ -118,6 +120,54 @@ const FacilityResistration = () => {
     "茨城県",
     "栃木県",
     "関東以外",
+  ];
+
+  const sports = [
+    "陸上競技",
+    "バスケットボール(3×3)",
+    "バスケットボール",
+    "サッカー",
+    "テニス",
+    "バドミントン",
+    "バレーボール",
+    "ハンドボール",
+    "ホッケー",
+    "ラグビー",
+    "アーチェリー",
+    "カヌー（スラローム）",
+    "カヌー（スプリント）",
+    "ボート",
+    "セーリング",
+    "ビーチバレーボール",
+    "サーフィン",
+    "スケードボード",
+    "スポーツクライミング",
+    "トライアスロン",
+    "体操競技",
+    "新体操",
+    "トランポリン",
+    "ウェイトリフティング",
+    "近代五種",
+    "テコンドー",
+    "レスリング",
+    "ボクシング",
+    "空手",
+    "柔道",
+    "馬術",
+    "射撃",
+    "ゴルフ",
+    "フェンシング",
+    "競泳",
+    "飛び込み",
+    "水球",
+    "アーティスティックスイミング",
+    "マラソンスイミング",
+    "野球・ソフトボール",
+    "卓球",
+    "自転車競技(BMXフリースタイル)",
+    "自転車競技(BMXレーシング)",
+    "自転車競技（トラック）",
+    "自転車競技（マウンテンバイク）",
   ];
 
   // const handleChange = (event) => {
@@ -170,8 +220,11 @@ const FacilityResistration = () => {
             facilityImage: doc.data().facilityImage,
             facilityType: doc.data().facilityType,
             facilityUrl: doc.data().facilityUrl,
+            facilityPhone: doc.data().facilityPhone,
+            facilityEmail: doc.data().facilityEmail,
             facilityPostCode: doc.data().facilityPostCode,
-            FacilityStyle: doc.data().facilityStyle,
+            facilityStyle: doc.data().facilityStyle,
+            facilityComment: doc.data().facilityComment,
             timestamp: doc.data().timestamp,
           }))
         )
@@ -210,14 +263,17 @@ const FacilityResistration = () => {
             .child(fileName)
             .getDownloadURL()
             .then(async (url) => {
-              await db.collection("facility").add({
+              await db.collection("facilities").add({
                 facilityImage: url,
                 uid: user.uid,
                 facilityName: facilityName,
                 facilityType: facilityType,
-                facilityUrl: facilityUrl,
+                facilityUrl: facilityUrl,        
+                facilityPhone: facilityPhone,
+                facilityEmail: facilityEmail,
                 facilityPostCode: facilityPostCode,
                 facilityStyle: facilityStyle,
+                facilityComment: facilityComment,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               });
             });
@@ -225,14 +281,17 @@ const FacilityResistration = () => {
       );
     } else {
       // テキストだけの処理
-      db.collection("facility").add({
+      db.collection("facilities").add({
         // facilityImage: url,
         uid: user.uid,
         facilityName: facilityName,
         facilityType: facilityType,
         facilityUrl: facilityUrl,
+        facilityPhone: facilityPhone,
+        facilityEmail: facilityEmail,
         facilityPostCode: facilityPostCode,
         facilityStyle: facilityStyle,
+        facilityComment: facilityComment,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
     }
@@ -240,8 +299,11 @@ const FacilityResistration = () => {
     setFacilityName("");
     setFacilityType("");
     setFacilityUrl("");
+    setFacilityPhone("");
+    setFacilityEmail("");
     setFacilityPostCode("");
     setFacilityStyle("");
+    setFacilityComment("");
     setArea("");
   };
 
@@ -252,7 +314,7 @@ const FacilityResistration = () => {
           <Typography>店舗情報登録</Typography>
           <div className={classes.root}>
             <div>
-              <form>
+              <form  onSubmit={sendFacilities}>
                 <FormControl className={classes.formControl}>
                   <Box className="classes.box1">
                     <IconButton>
@@ -274,7 +336,7 @@ const FacilityResistration = () => {
                     </IconButton>
                   </Box>
                   <TextField
-                    // id="standard-full-width"
+                    id="standard-full-width"
                     label="店舗名・施設名"
                     style={{ margin: 8 }}
                     placeholder="オレリン公民館"
@@ -294,50 +356,51 @@ const FacilityResistration = () => {
                     placeholder="http://"
                     fullWidth
                     margin="normal"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    // InputLabelProps={{
+                    //   shrink: true,
+                    // }}
                     value={facilityUrl}
                     onChange={(e) => setFacilityUrl(e.target.value)}
                   />
                   <TextField
-                    label="連絡先"
-                    id="margin-none"
-                    className={classes.textField}
-                    helperText="電話番号"
-                    margin="dense"
-                    value={setFacilityPhone}
+                    id="standard-full-width"
+                    label="電話番号"
+                    // className={classes.textField}
+                    style={{ margin: 8 }}
+                    placeholder="0300000000"
+                    helperText="電話番号(任意・情報は公開されます）"
+                    fullWidth
+                    margin="normal"
+                    // InputLabelProps={{
+                    //   shrink: true,
+                    // }}
+                    value={facilityPhone}
                     onChange={(e) => setFacilityPhone(e.target.value)}
+                  />
+                  <TextField
+                    id="standard-full-width"
+                    label="Email"
+                    // className={classes.textField}
+                    style={{ margin: 8 }}
+                    placeholder="0300000000"
+                    helperText="Email(任意・情報は公開されます）"
+                    fullWidth
+                    margin="normal"
+                    // InputLabelProps={{
+                    //   shrink: true,
+                    // }}
+                    value={facilityEmail}
+                    onChange={(e) => setFacilityEmail(e.target.value)}
                   />
                   <TextField
                     label="郵便番号"
                     id="margin-dense"
                     className={classes.textField}
-                    helperText="郵便番号を７桁の数字で入力　111-2222"
+                    helperText="郵便番号を７桁の半角数字で入力　1112222 (ハイフン-なし）(任意・情報は公開されます）"
                     margin="dense"
                     value={facilityPostCode}
                     onChange={(e) => setFacilityPostCode(e.target.value)}
                   />
-                  {/* <box> */}
-                    {/* <InputLabel shrink htmlFor="select-multiple-native">
-                      エリア
-                    </InputLabel>
-                    <Select
-                      multiple
-                      native
-                      value={area}
-                      onChange={handleChangeMultiple}
-                      inputProps={{
-                        id: "select-multiple-native",
-                      }}
-                    >
-                      {names.map((name) => (
-                        <option key={name} value={name}>
-                          {name}
-                        </option>
-                      ))}
-                    </Select> */}
-                  {/* </box> */}
                   <FormLabel component="legend"> 施設タイプ</FormLabel>
                   <RadioGroup
                     row
@@ -362,6 +425,18 @@ const FacilityResistration = () => {
                       label="インストラクター利用（レッスン・イベント等）"
                     />
                   </RadioGroup>
+                  <TextField
+                    label="施設の内容・出来るスポーツ"
+                    id="margin-dense"
+                    // className={classes.textField}
+                    helperText="わかりやすく説明してください"
+                    margin="dense"
+                    value={facilityComment}
+                    multiline
+                    rows={3}
+                    onChange={(e) => setFacilityComment(e.target.value)}
+                  />
+                  {/*スポーツ */}
                   <Button
                     type="submit"
                     disabled={!facilityName}

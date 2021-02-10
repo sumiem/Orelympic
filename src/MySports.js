@@ -208,7 +208,7 @@ const MySports = () => {
                             width="85"
                     />
                   </Box>
-                  <Box className={classes.messaage}>
+                  <Box className={classes.message}>
                     <Typography>{myact.sportsname}</Typography>
                   </Box>
                 </div>

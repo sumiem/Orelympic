@@ -62,7 +62,7 @@ const SportsResister = () => {
   // const unSub = auth.onAuthStateChanged((user) => {
   //   if(!user){return <Redirect to="/home" />}});
 
-  // 記述3. useStateを用意します　画像を保持する箱、入力された文字列を保持する箱
+  // 記述3. useStateを用意します。画像を保持する箱、入力された文字列を保持する箱
   const [inputImage, setInputImage] = useState(null);
   const [sportsname, setSportsname] = useState("");
   const [detail, setDetail] = useState("");

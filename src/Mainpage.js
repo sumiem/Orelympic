@@ -135,6 +135,14 @@ const Mainpage = (props) => {
           <MenuItem onClick={handleClose}>mySportsList</MenuItem></Link>
           <Link to ="/sportslist" color="inherit">
           <MenuItem onClick={handleClose}>sportslist</MenuItem></Link>
+          <Link to ="/facilityresistration" color="inherit">
+          <Link to ="/instlist" color="inherit">
+          <MenuItem onClick={handleClose}>インストラクターリスト</MenuItem></Link>
+          <Link to ="/courselist" color="inherit">
+          <MenuItem onClick={handleClose}>体験コース</MenuItem></Link>
+          <MenuItem onClick={handleClose}>施設登録</MenuItem></Link>
+          <Link to ="/instresistration" color="inherit">
+          <MenuItem onClick={handleClose}>インストラクター登録</MenuItem></Link>
         </Menu>
             <Typography
               variant="h6"
@@ -142,7 +150,7 @@ const Mainpage = (props) => {
               className={classes.apptitle}
               noWrap
             >
-              Orelympic Personal Mainpage
+              Orelympic Mainpage
             </Typography>
 
             {auth && (
@@ -159,7 +167,7 @@ const Mainpage = (props) => {
                     className={classes.avatar}
                   /> */}
                   <Avatar src={user.photoUrl} className={classes.avatar} />
-                  <Typography>{user.displayName}</Typography>
+                  {/* <Typography>{user.displayName}</Typography> */}
                 </IconButton>
                 <Button
                   color="inherit"
@@ -217,14 +225,27 @@ const Mainpage = (props) => {
                   <br />
                   さらなるメダルの獲得まであとすこし！
                   <br />
-                  意気込み！
                 </Typography>
                 <div className={classes.heroButtons}>
                   <Grid container spacing={2} justify="center">
                     <Grid item>
                       <Link to="/sportsexp">
                         <Button variant="contained" color="primary">
-                          種目を探す・登録する
+                          種目を登録・探す
+                        </Button>
+                      </Link>
+                    </Grid>
+                    <Grid item> 
+                      <Link to="/courselist">
+                        <Button variant="contained" color="primary">
+                          体験コースをみる
+                        </Button>
+                      </Link>
+                    </Grid>
+                    <Grid item> 
+                      <Link to="/instlist">
+                        <Button variant="contained" color="primary">
+                         インストラクターを見る
                         </Button>
                       </Link>
                     </Grid>

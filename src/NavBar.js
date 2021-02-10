@@ -111,6 +111,10 @@ const NavBar = (props) => {
           <MenuItem onClick={handleClose}>mySportsList</MenuItem></Link>
           <Link to ="/sportslist" color="inherit">
           <MenuItem onClick={handleClose}>sportslist</MenuItem></Link>
+          <Link to ="/instlist" color="inherit">
+          <MenuItem onClick={handleClose}>インストラクターリスト</MenuItem></Link>
+          <Link to ="/courselist" color="inherit">
+          <MenuItem onClick={handleClose}>体験コース</MenuItem></Link>
         </Menu>
           <Typography
             variant="h6"
@@ -118,7 +122,7 @@ const NavBar = (props) => {
             className={classes.apptitle}
             noWrap
           >
-            Orelympic Personal Page
+          Personal Page
           </Typography>
           {/* あとで、アカウントのボタン実装https://material-ui.com/components/app-bar/#app-bar*/}
           {auth && (

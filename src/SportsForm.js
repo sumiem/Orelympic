@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
+import { withRouter } from "react-router-dom";
 
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '@material-ui/core/Card';
@@ -62,6 +63,7 @@ const SportsForm = () => {
             username: "",
             timestamp: "",
             sportsLogo: "",
+            sportsUrl: "",
         },
     ]);
 
@@ -79,6 +81,7 @@ const SportsForm = () => {
                 detail: doc.data().detail,
                 timestamp: doc.data().timestamp,
                 sportsLogo: doc.data().sportsLogo,
+                sportsUrl: doc.data().sportsUrl,
               }))
             )
           );
@@ -104,6 +107,7 @@ const SportsForm = () => {
               detail={sport.detail}
               timestamp={sport.timestamp}
               sportsLogo={sport.sportsLogo}
+              sportsUrl={sport.sportsUrl}
             />
             </>
         ))}
@@ -112,4 +116,4 @@ const SportsForm = () => {
     );
 };
 
-export default SportsForm
+export default withRouter(SportsForm)
